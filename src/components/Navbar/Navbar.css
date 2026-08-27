@@ -1,0 +1,149 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(3, 24, 22, 0.72);
+  border-bottom: 1px solid rgba(167, 243, 208, 0.12);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.site-header.is-scrolled {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.site-header-inner {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.site-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 0;
+}
+
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #f0fdf4;
+  text-decoration: none;
+}
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  box-shadow: 0 12px 22px rgba(16, 185, 129, 0.22);
+}
+
+.brand-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.brand-name span {
+  color: #6ee7b7;
+}
+
+.desktop-nav,
+.desktop-cta {
+  display: flex;
+  align-items: center;
+}
+
+.desktop-nav {
+  gap: 24px;
+}
+
+.nav-link,
+.mobile-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(236, 253, 245, 0.84);
+  text-decoration: none;
+}
+
+.nav-icon,
+.cta-icon,
+.menu-icon {
+  flex: none;
+}
+
+.nav-icon {
+  width: 14px;
+  height: 14px;
+  color: #6ee7b7;
+}
+
+.nav-link:hover,
+.mobile-nav-link:hover {
+  color: #ffffff;
+}
+
+.cta-link,
+.mobile-cta-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  background: #6ee7b7;
+  color: #03231f;
+}
+
+.cta-link,
+.mobile-cta-link {
+  padding: 12px 18px;
+}
+
+.mobile-toggle {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(110, 231, 183, 0.14);
+  color: #ecfdf5;
+  padding: 10px 14px;
+}
+
+.mobile-menu {
+  border-top: 1px solid rgba(167, 243, 208, 0.12);
+  background: rgba(3, 24, 22, 0.96);
+}
+
+.mobile-nav {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 0 24px;
+}
+
+.mobile-nav-link,
+.mobile-cta-link {
+  padding: 12px 0;
+}
+
+.mobile-cta-link {
+  gap: 8px;
+}
+
+@media (max-width: 900px) {
+  .desktop-nav,
+  .desktop-cta {
+    display: none;
+  }
+
+  .mobile-toggle {
+    display: inline-flex;
+  }
+}
