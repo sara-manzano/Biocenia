@@ -1,112 +1,632 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --bg: #0b221d;
+  --bg-soft: #103a38;
+  --surface: rgba(255, 255, 255, 0.07);
+  --surface-strong: rgba(255, 255, 255, 0.11);
+  --border: rgba(247, 195, 84, 0.18);
+  --text: #f7fbf7;
+  --muted: rgba(247, 251, 247, 0.72);
+  --heading: #fff7d1;
+  --accent: #f7c354;
+  --accent-soft: rgba(247, 195, 84, 0.18);
+  --success: #7ce2cf;
+  --shadow: 0 24px 60px rgba(4, 14, 18, 0.28);
+  --radius-lg: 28px;
+  --radius-md: 20px;
+  --max-width: 1180px;
+  --sans: 'Avenir Next', 'Trebuchet MS', sans-serif;
+  --heading-font: 'Georgia', 'Times New Roman', serif;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
+  font: 17px/1.55 var(--sans);
+  letter-spacing: 0.01em;
   color: var(--text);
-  background: var(--bg);
+  background:
+    radial-gradient(circle at top left, rgba(247, 195, 84, 0.14), transparent 26%),
+    radial-gradient(circle at top right, rgba(124, 226, 207, 0.14), transparent 30%),
+    linear-gradient(180deg, #11443f 0%, #0a211c 52%, #081714 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+* {
+  box-sizing: border-box;
+}
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
+  min-width: 320px;
+  background: transparent;
+}
+
+a,
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  display: block;
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
 }
 
 h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  line-height: 1.1;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
+h2,
+h3,
 p {
   margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+h1,
+h2,
+h3 {
+  color: var(--heading);
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+h1,
+h2 {
+  font-family: var(--heading-font);
+  letter-spacing: -0.03em;
+}
+
+h1 {
+  font-size: clamp(2.7rem, 6vw, 4.8rem);
+  line-height: 0.96;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+  line-height: 1.06;
+}
+
+h3 {
+  font-size: 1.15rem;
+}
+
+p {
+  color: var(--muted);
+}
+
+.site-shell {
+  min-height: 100svh;
+}
+
+.site-main,
+.site-footer,
+.page-hero,
+.content-section {
+  width: min(var(--max-width), calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.site-main {
+  padding: 28px 0 64px;
+}
+
+.site-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  gap: 20px;
+  align-items: stretch;
+  padding: 8px 0 32px;
+}
+
+.site-footer-intro,
+.site-footer-copy {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow);
+}
+
+.site-footer-intro,
+.site-footer-copy {
+  padding: 22px;
+}
+
+.site-footer-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.site-footer-copy {
+  display: flex;
+  align-items: center;
+  color: #fff7d1;
+}
+
+.page-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.page-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.8fr);
+  gap: 24px;
+  align-items: stretch;
+  padding: 36px 0 10px;
+}
+
+.hero-copy {
+  max-width: 720px;
+  margin-top: 20px;
+  font-size: 1.05rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.hero-panel,
+.info-card,
+.species-card,
+.filters-panel,
+.reservation-panel,
+.empty-state {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.hero-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  padding: 28px;
+  background:
+    linear-gradient(180deg, rgba(247, 195, 84, 0.14), rgba(255, 255, 255, 0.05)),
+    var(--surface);
+}
+
+.hero-panel-compact {
+  gap: 16px;
+}
+
+.hero-summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hero-summary-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero-summary-item span {
+  color: var(--muted);
+}
+
+.hero-summary-item strong {
+  color: var(--heading);
+  font-size: 1rem;
+  text-align: right;
+}
+
+.hero-panel-label,
+.eyebrow {
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.hero-panel strong {
+  color: var(--heading);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.primary-link,
+.secondary-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.primary-link {
+  background: linear-gradient(135deg, #f7c354 0%, #f38b3c 100%);
+  color: #17302a;
+}
+
+.secondary-link {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--text);
+}
+
+.content-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.home-overview-section {
+  gap: 20px;
+}
+
+.home-overview-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.editorial-panel {
+  padding: 10px 0 6px;
+}
+
+.section-heading {
+  max-width: 740px;
+}
+
+.metric-grid,
+.card-grid,
+.species-grid,
+.detail-grid,
+.filters-row,
+.editorial-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.metric-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.card-grid,
+.species-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.detail-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.filters-row {
+  grid-template-columns: minmax(0, 1.2fr) minmax(220px, 0.8fr);
+}
+
+.editorial-grid {
+  grid-template-columns: 1.1fr 0.9fr;
+}
+
+.info-card,
+.species-card,
+.reservation-panel,
+.filters-panel {
+  padding: 22px;
+}
+
+.info-card.accent {
+  background:
+    linear-gradient(180deg, rgba(124, 226, 207, 0.16), rgba(255, 255, 255, 0.04)),
+    var(--surface);
+}
+
+.info-card-body,
+.species-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-meta {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.editorial-note {
+  padding: 24px 26px;
+  border-left: 1px solid rgba(247, 195, 84, 0.3);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  color: #fff7d1;
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+
+.planner-section {
+  padding-bottom: 10px;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.page-caption {
+  max-width: 760px;
+}
+
+.results-badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 10px 14px;
+  background: rgba(124, 226, 207, 0.16);
+  color: var(--heading);
+}
+
+.filters-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field-label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--heading);
+  font-weight: 600;
+}
+
+.field,
+.field-select,
+.field-textarea {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  background: rgba(8, 21, 24, 0.58);
+  color: var(--text);
+  padding: 14px 16px;
+}
+
+.field-textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip-button {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  padding: 10px 14px;
+  background: transparent;
+  color: var(--text);
+}
+
+.chip-button.is-active {
+  background: var(--accent-soft);
+  border-color: rgba(247, 195, 84, 0.32);
+  color: #fff7d1;
+}
+
+.species-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow: hidden;
+}
+
+.species-media {
+  margin: -22px -22px 0;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.species-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.92) contrast(1.02);
+}
+
+.species-card-head,
+.species-card-foot {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.species-card-foot {
+  align-items: center;
+}
+
+.species-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.species-status,
+.species-region {
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+}
+
+.species-status {
+  background: rgba(124, 226, 207, 0.18);
+  color: #edfffb;
+}
+
+.species-region {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+.favorite-button {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  padding: 10px 14px;
+}
+
+.favorite-button.is-active {
+  background: rgba(247, 195, 84, 0.18);
+  color: #fff7d1;
+}
+
+.source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #f59b47;
+  text-decoration: none;
+}
+
+.inline-note,
+.form-feedback {
+  border-radius: 18px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.form-feedback.is-success {
+  background: rgba(124, 226, 207, 0.16);
+  color: #edfffb;
+}
+
+.form-feedback.is-error {
+  background: rgba(243, 139, 60, 0.18);
+  color: #fff4de;
+}
+
+.reservation-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 18px;
+}
+
+.reservation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.reservation-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.empty-state {
+  padding: 32px;
+  text-align: left;
+}
+
+@media (max-width: 1024px) {
+  :root {
+    font-size: 16px;
+  }
+
+  .site-footer,
+  .page-hero,
+  .home-overview-grid,
+  .reservation-layout,
+  .metric-grid,
+  .card-grid,
+  .species-grid,
+  .detail-grid,
+  .filters-row,
+  .editorial-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header,
+  .species-card-head,
+  .species-card-foot {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-main {
+    padding-top: 16px;
+  }
+
+  .page-hero {
+    padding-top: 20px;
+  }
+
+  .hero-actions,
+  .chip-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .primary-link,
+  .secondary-link {
+    width: 100%;
+  }
+
+  .site-main,
+  .site-footer,
+  .page-hero,
+  .content-section {
+    width: min(var(--max-width), calc(100% - 24px));
+  }
+
+  .hero-panel,
+  .info-card,
+  .species-card,
+  .filters-panel,
+  .reservation-panel,
+  .empty-state {
+    padding: 20px;
+  }
 }

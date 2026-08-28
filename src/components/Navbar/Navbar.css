@@ -1,28 +1,28 @@
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 10;
-  background: rgba(3, 24, 22, 0.72);
-  border-bottom: 1px solid rgba(167, 243, 208, 0.12);
+  z-index: 20;
+  background: rgba(10, 38, 34, 0.82);
+  border-bottom: 1px solid rgba(247, 195, 84, 0.18);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
 }
 
 .site-header.is-scrolled {
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 18px 40px rgba(6, 18, 24, 0.28);
 }
 
 .site-header-inner {
-  width: min(1120px, calc(100% - 32px));
+  width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
 }
 
 .site-header-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 18px 0;
+  gap: 16px;
+  padding: 16px 0;
 }
 
 .brand-link {
@@ -31,13 +31,21 @@
   gap: 12px;
   color: #f0fdf4;
   text-decoration: none;
+  min-width: 0;
 }
 
 .brand-logo {
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  box-shadow: 0 12px 22px rgba(16, 185, 129, 0.22);
+  object-fit: cover;
+  box-shadow: 0 12px 22px rgba(240, 116, 64, 0.22);
+}
+
+.brand-copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .brand-name {
@@ -46,18 +54,27 @@
   letter-spacing: 0.08em;
 }
 
+.brand-tagline {
+  color: rgba(245, 247, 244, 0.68);
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .brand-name span {
-  color: #6ee7b7;
+  color: #f38b3c;
 }
 
 .desktop-nav,
-.desktop-cta {
+.desktop-tools,
+.desktop-status {
   display: flex;
   align-items: center;
 }
 
 .desktop-nav {
-  gap: 24px;
+  gap: 12px;
 }
 
 .nav-link,
@@ -65,12 +82,15 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: rgba(236, 253, 245, 0.84);
+  color: rgba(245, 247, 244, 0.82);
   text-decoration: none;
+  padding: 10px 14px;
+  border-radius: 999px;
+  transition: background-color 180ms ease, color 180ms ease;
 }
 
 .nav-icon,
-.cta-icon,
+.badge-icon,
 .menu-icon {
   flex: none;
 }
@@ -78,12 +98,57 @@
 .nav-icon {
   width: 14px;
   height: 14px;
-  color: #6ee7b7;
+  color: #7ce2cf;
 }
 
 .nav-link:hover,
 .mobile-nav-link:hover {
   color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-link.is-active,
+.mobile-nav-link.is-active {
+  background: rgba(124, 226, 207, 0.18);
+  color: #fff7d1;
+}
+
+.desktop-tools {
+  gap: 16px;
+}
+
+.desktop-status,
+.mobile-status {
+  gap: 12px;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(245, 247, 244, 0.92);
+  font-size: 0.9rem;
+}
+
+.status-chip-favorites {
+  background: rgba(124, 226, 207, 0.16);
+}
+
+.status-text,
+.mobile-reservation-copy {
+  color: #fff7d1;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.badge-icon {
+  width: 14px;
+  height: 14px;
 }
 
 .cta-link,
@@ -94,8 +159,8 @@
   border-radius: 999px;
   text-decoration: none;
   font-weight: 700;
-  background: #6ee7b7;
-  color: #03231f;
+  background: linear-gradient(135deg, #f7c354 0%, #f38b3c 100%);
+  color: #17302a;
 }
 
 .cta-link,
@@ -109,18 +174,19 @@
   gap: 8px;
   border: 0;
   border-radius: 999px;
-  background: rgba(110, 231, 183, 0.14);
-  color: #ecfdf5;
+  background: rgba(124, 226, 207, 0.16);
+  color: #fff7d1;
   padding: 10px 14px;
+  cursor: pointer;
 }
 
 .mobile-menu {
-  border-top: 1px solid rgba(167, 243, 208, 0.12);
-  background: rgba(3, 24, 22, 0.96);
+  border-top: 1px solid rgba(247, 195, 84, 0.16);
+  background: rgba(10, 38, 34, 0.98);
 }
 
 .mobile-nav {
-  width: min(1120px, calc(100% - 32px));
+  width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -130,20 +196,51 @@
 
 .mobile-nav-link,
 .mobile-cta-link {
-  padding: 12px 0;
+  padding: 12px 16px;
 }
 
-.mobile-cta-link {
-  gap: 8px;
+.mobile-status {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.mobile-reservation-copy {
+  white-space: normal;
 }
 
 @media (max-width: 900px) {
   .desktop-nav,
-  .desktop-cta {
+  .desktop-tools {
     display: none;
   }
 
   .mobile-toggle {
     display: inline-flex;
+  }
+
+  .site-header-row {
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 560px) {
+  .brand-name {
+    font-size: 0.98rem;
+  }
+
+  .brand-link {
+    gap: 10px;
+  }
+
+  .brand-tagline {
+    white-space: normal;
+  }
+
+  .mobile-toggle span {
+    display: none;
   }
 }

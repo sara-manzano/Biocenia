@@ -1,25 +1,30 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
+import Navbar from '../components/Navbar'
 
 function Layout() {
   return (
-    <div className="app-shell">
-      <header className="app-header">
-        <div>
-          <p className="eyebrow">Biocenia</p>
-          <h1></h1>
-        </div>
-        <nav className="app-nav" aria-label="Navegacion principal">
-          <NavLink to="/" end>
-            Inicio
-          </NavLink>
-          <NavLink to="/about">__</NavLink>
-        </nav>
-      </header>
-      <main className="app-main">
+    <div className="site-shell">
+      <Navbar />
+
+      <main className="site-main">
         <Outlet />
       </main>
+
+      <footer className="site-footer">
+        <section className="site-footer-intro" aria-label="Resumen del proyecto">
+          <p className="eyebrow">Biocenia</p>
+          <h3>Explora la reserva, conoce especies y planifica tu visita</h3>
+          <p>
+            Biocenia es un proyecto de divulgación científica y educación ambiental que busca acercar la biodiversidad a la ciudadanía.
+          </p>
+        </section>
+
+        <section className="site-footer-copy" aria-label="Informacion de contacto">
+          <p>Abierto todos los días de 9:00 a 20:30. Contacto: visitas@biocenia.eco</p>
+        </section>
+      </footer>
     </div>
   )
 }
 
-export default Layout;
+export default Layout

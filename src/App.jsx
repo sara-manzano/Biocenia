@@ -1,14 +1,21 @@
 import { Route, Routes } from 'react-router-dom'
+import Layout from './layouts/Layout'
 import Home from './pages/Home'
 import NotFoundPage from './pages/NotFoundPage.jsx'
+import SpeciesPage from './pages/Species'
+import VisitPage from './pages/Visit'
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="*" element={<NotFoundPage />} />
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/species" element={<SpeciesPage />} />
+        <Route path="/visit" element={<VisitPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
     </Routes>
-  );
+  )
 }
 
 export default App
