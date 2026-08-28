@@ -1,5 +1,6 @@
 import InfoCard from '../../components/InfoCard'
 import PageHero from '../../components/PageHero'
+import heroImage from '../../assets/logo.jpeg'
 import { useBiocenia } from '../../context/useBiocenia.js'
 import { habitatsOverview, impactMetrics } from '../../data/siteContent.js'
 
@@ -41,13 +42,17 @@ export default function Home() {
         eyebrow="Biocenia"
         title="Explora nuestros hábitats, conoce especies y planifica tu visita"
         description="Biocenia concentra hábitats, especies y reserva. La idea es simple: dejar una fecha, un grupo y una intención clara para que el recorrido sea más provechoso."
+        sectionClassName="home-hero-section"
+        contentClassName="home-hero-copy"
+        titleClassName="home-hero-title"
+        style={{ '--hero-bg-image': `url(${heroImage})` }}
         actions={[
           { label: 'Explorar especies', to: '/species', variant: 'primary' },
           { label: 'Reservar visita', to: '/visit', variant: 'secondary' },
         ]}
         aside={
           <div className="hero-panel hero-panel-compact">
-            <p className="hero-panel-label">Resumen rápido</p>
+            <p className="hero-panel-label">Resumen</p>
             <div className="hero-summary-list">
               {visitSnapshot.map((item) => (
                 <div key={item.label} className="hero-summary-item">
@@ -62,8 +67,8 @@ export default function Home() {
 
       <section className="content-section home-overview-section">
         <div className="section-heading">
-          <p className="eyebrow">Pulso de la reserva</p>
-          <h2>Panorama corto para decidir por dónde empezar</h2>
+          <p className="eyebrow">Reserva</p>
+          <h2>Decidir por dónde empezar</h2>
         </div>
         <div className="home-overview-grid">
           <div className="metric-grid">
@@ -94,7 +99,7 @@ export default function Home() {
       <section className="content-section">
         <div className="section-heading">
           <p className="eyebrow">Habitats</p>
-          <h2>Zonas para orientar el recorrido antes de entrar al catálogo</h2>
+          <h2>Zonas para orientar el recorrido</h2>
         </div>
         <div className="card-grid">
           {habitatsOverview.map((habitat) => (

@@ -17,7 +17,7 @@
   --sans: 'Avenir Next', 'Trebuchet MS', sans-serif;
   --heading-font: 'Georgia', 'Times New Roman', serif;
 
-  font: 17px/1.55 var(--sans);
+  font: 16px/1.55 var(--sans);
   letter-spacing: 0.01em;
   color: var(--text);
   background:
@@ -85,17 +85,17 @@ h2 {
 }
 
 h1 {
-  font-size: clamp(2.7rem, 6vw, 4.8rem);
+  font-size: clamp(2.2rem, 5vw, 3.9rem);
   line-height: 0.96;
 }
 
 h2 {
-  font-size: clamp(1.8rem, 3vw, 2.7rem);
+  font-size: clamp(1.45rem, 2.5vw, 2.2rem);
   line-height: 1.06;
 }
 
 h3 {
-  font-size: 1.15rem;
+  font-size: 1rem;
 }
 
 p {
@@ -165,10 +165,51 @@ p {
   padding: 36px 0 10px;
 }
 
+.home-hero-section {
+  position: relative;
+  overflow: hidden;
+  padding: 40px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(180deg, rgba(8, 23, 20, 0.7), rgba(8, 23, 20, 0.82)),
+    var(--hero-bg-image) center / cover no-repeat;
+  box-shadow: var(--shadow);
+}
+
+.home-hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, rgba(247, 195, 84, 0.14), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(124, 226, 207, 0.16), transparent 28%);
+  pointer-events: none;
+}
+
+.home-hero-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.home-hero-copy {
+  text-align: center;
+}
+
+.home-hero-title {
+  line-height: 1.08;
+}
+
+.home-hero-copy .hero-copy,
+.home-hero-copy .hero-actions {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .hero-copy {
   max-width: 720px;
   margin-top: 20px;
-  font-size: 1.05rem;
+  font-size: 1rem;
 }
 
 .hero-actions {
@@ -226,7 +267,7 @@ p {
 
 .hero-summary-item strong {
   color: var(--heading);
-  font-size: 1rem;
+  font-size: 0.95rem;
   text-align: right;
 }
 
@@ -235,7 +276,7 @@ p {
   color: var(--accent);
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 700;
 }
 
@@ -347,7 +388,7 @@ p {
 
 .card-meta {
   color: var(--muted);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
 }
 
 .editorial-note {
@@ -383,6 +424,7 @@ p {
   padding: 10px 14px;
   background: rgba(124, 226, 207, 0.16);
   color: var(--heading);
+  font-size: 0.92rem;
 }
 
 .filters-panel {
@@ -397,6 +439,7 @@ p {
   gap: 8px;
   color: var(--heading);
   font-weight: 600;
+  font-size: 0.95rem;
 }
 
 .field,
@@ -619,6 +662,10 @@ p {
   .page-hero,
   .content-section {
     width: min(var(--max-width), calc(100% - 24px));
+  }
+
+  .home-hero-section {
+    padding: 24px;
   }
 
   .hero-panel,

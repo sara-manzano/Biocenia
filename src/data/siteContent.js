@@ -47,11 +47,6 @@ export const habitatsOverview = [
     description: 'Un hábitat de sombra irregular y actividad constante, con lectura clara de relaciones entre especies.',
     meta: 'Funciona bien para visitas que buscan comparar comportamientos y dinámicas de gran fauna.',
   },
-  {
-    title: 'Australia',
-    description: 'Paisaje de especies únicas y adaptaciones muy marcadas frente a sequía, calor y distancia.',
-    meta: 'Sirve para introducir endemismos y recorridos con identidad propia dentro de la reserva.',
-  },
 
 ]
 
@@ -88,7 +83,7 @@ export const speciesCatalogSources = [
     name: 'Tortuga carey',
     wikipediaTitle: 'Hawksbill_sea_turtle',
     habitat: 'Costa y arrecife',
-    status: 'En peligro critico',
+    status: 'En peligro crítico',
     region: 'Caribe',
     fallbackDescription: 'Indicadora de salud costera y de la fragilidad de los arrecifes coralinos.',
   },
@@ -106,7 +101,7 @@ export const speciesCatalogSources = [
     name: 'Guacamaya roja',
     wikipediaTitle: 'Scarlet_macaw',
     habitat: 'Bosque templado',
-    status: 'Preocupacion menor',
+    status: 'Preocupación menor',
     region: 'Corredor mesoamericano',
     fallbackDescription: 'Ayuda a explicar movilidad, enriquecimiento ambiental y educación pública.',
   },
@@ -138,20 +133,11 @@ export const speciesCatalogSources = [
     fallbackDescription: 'Especie clave para trabajar comportamiento social, presión humana y conservación de bosque africano.',
   },
   {
-    id: 'pinguino-emperador',
-    name: 'Pingüino emperador',
-    wikipediaTitle: 'Emperor_penguin',
-    habitat: 'Polo Sur',
-    status: 'Casi amenazada',
-    region: 'Antártida',
-    fallbackDescription: 'Referencia directa para explicar adaptación al frío extremo y cambios en el hielo marino.',
-  },
-  {
     id: 'canguro-rojo',
     name: 'Canguro rojo',
     wikipediaTitle: 'Red_kangaroo',
     habitat: 'Australia',
-    status: 'Preocupacion menor',
+    status: 'Preocupación menor',
     region: 'Interior australiano',
     fallbackDescription: 'Permite hablar de locomoción, adaptación al calor y fauna endémica australiana.',
   },

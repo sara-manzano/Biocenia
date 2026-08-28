@@ -41,9 +41,9 @@ export default function VisitPage() {
       <section className="content-section">
         <div className="page-caption">
           <p className="eyebrow">Visita</p>
-          <h2>Cierra una visita con criterio, no con un formulario de compromiso</h2>
+          <h2>Cierra una visita con criterio para aprovecharla al máximo</h2>
           <p>
-            La idea es simple: dejar una fecha, un grupo y una intención clara para que el recorrido no nazca vacío.
+            La idea es simple: dejar una fecha, un grupo y una intención clara para que el recorrido.
           </p>
         </div>
       </section>

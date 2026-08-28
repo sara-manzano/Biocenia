@@ -35,9 +35,9 @@ export default function SpeciesPage() {
         <div className="page-header">
           <div className="page-caption">
             <p className="eyebrow">Catálogo</p>
-            <h2>Un catálogo breve, curado y útil para decidir qué vale la pena seguir</h2>
+            <h2>Un catálogo breve y útil para ver las especies más relevantes</h2>
             <p>
-              No intenta mostrarlo todo. Filtra rápido, conserva tus favoritas y deja cada ficha con suficiente contexto para tomar una decisión.
+              Filtra rápido, selecciona tus favoritas y lee la información más relevante de cada especie.
             </p>
           </div>
           <div className="results-badge">{species.length} resultados</div>
@@ -59,7 +59,7 @@ export default function SpeciesPage() {
         <div className="filters-panel">
           <div className="filters-row">
             <label className="field-label" htmlFor="species-search">
-              Buscar por nombre, región o estado
+              Buscar por nombre, hábitat o especie
               <input
                 id="species-search"
                 className="field"
@@ -108,7 +108,7 @@ export default function SpeciesPage() {
         {!isLoading && !error && species.length === 0 ? (
           <div className="empty-state">
             <p className="eyebrow">Sin resultados</p>
-            <h3>No aparece ninguna ficha con ese cruce</h3>
+            <h3>No aparece ninguna ficha</h3>
             <p>Prueba con un hábitat más amplio o una palabra menos específica.</p>
           </div>
         ) : null}

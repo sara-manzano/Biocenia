@@ -19,7 +19,7 @@ function Layout() {
           </p>
         </section>
 
-        <section className="site-footer-copy" aria-label="Informacion de contacto">
+        <section className="site-footer-copy" aria-label="Información de contacto">
           <p>Abierto todos los días de 9:00 a 20:30. Contacto: visitas@biocenia.eco</p>
         </section>
       </footer>

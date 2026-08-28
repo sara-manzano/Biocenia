@@ -10,12 +10,22 @@ function ActionLink({ action }) {
   )
 }
 
-export default function PageHero({ eyebrow, title, description, actions, aside }) {
+export default function PageHero({
+  eyebrow,
+  title,
+  description,
+  actions,
+  aside,
+  contentClassName = '',
+  titleClassName = '',
+  sectionClassName = '',
+  style,
+}) {
   return (
-    <section className="page-hero">
-      <div>
+    <section className={`page-hero ${sectionClassName}`.trim()} style={style}>
+      <div className={contentClassName}>
         <p className="eyebrow">{eyebrow}</p>
-        <h1>{title}</h1>
+        <h1 className={titleClassName}>{title}</h1>
         <p className="hero-copy">{description}</p>
 
         {actions?.length ? (
