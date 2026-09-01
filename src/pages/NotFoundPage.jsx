@@ -1,14 +1,17 @@
 import { Link } from 'react-router-dom'
+import { useBiocenia } from '../context/useBiocenia.js'
 
 function NotFoundPage() {
+  const { copy } = useBiocenia()
+
   return (
     <section className="content-section">
       <div className="empty-state">
         <p className="eyebrow">404</p>
-        <h2>Ruta no encontrada</h2>
-        <p>La URL no coincide con ninguna vista registrada en Biocenia.</p>
+        <h2>{copy.notFound.title}</h2>
+        <p>{copy.notFound.description}</p>
         <Link to="/" className="primary-link">
-          Volver al inicio
+          {copy.notFound.action}
         </Link>
       </div>
     </section>

@@ -1,82 +1,41 @@
-import { useEffect, useMemo, useState } from 'react'
-import { speciesCatalogSources } from '../data/siteContent.js'
+import { useMemo } from 'react'
+import {
+  DEFAULT_LANGUAGE,
+  getHabitatLabel,
+  getSupportedLanguage,
+  speciesCatalogSources,
+} from '../data/siteContent.js'
 
-const WIKIPEDIA_SUMMARY_ENDPOINT = 'https://en.wikipedia.org/api/rest_v1/page/summary/'
-
-export function useSpeciesCatalog(selectedHabitat, query) {
-  const [species, setSpecies] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState('')
-
-  useEffect(() => {
-    let isActive = true
-    const controller = new AbortController()
-
-    async function loadSpecies() {
-      setIsLoading(true)
-      setError('')
-
-      try {
-        const responses = await Promise.allSettled(
-          speciesCatalogSources.map(async (source) => {
-            const response = await fetch(
-              `${WIKIPEDIA_SUMMARY_ENDPOINT}${encodeURIComponent(source.wikipediaTitle)}`,
-              { signal: controller.signal },
-            )
-
-            if (!response.ok) {
-              throw new Error(`No fue posible cargar ${source.name}.`)
-            }
-
-            const data = await response.json()
-
-            return {
-              id: source.id,
-              name: source.name,
-              habitat: source.habitat,
-              status: source.status,
-              región: source.region,
-              description: data.extract ?? source.fallbackDescription,
-              image: data.thumbnail?.source ?? '',
-              sourceUrl: data.content_urls?.desktop?.page ?? '',
-            }
-          }),
-        )
-
-        const data = responses
-          .filter((result) => result.status === 'fulfilled')
-          .map((result) => result.value)
-
-        if (data.length === 0) {
-          throw new Error('No fue posible cargar el catálogo.')
-        }
-
-        if (isActive) {
-          setSpecies(data)
-        }
-      } catch (loadError) {
-        if (loadError.name !== 'AbortError' && isActive) {
-          setError('No se pudo cargar el catálogo desde la API pública.')
-          setSpecies([])
-        }
-      } finally {
-        if (isActive) {
-          setIsLoading(false)
-        }
-      }
-    }
-
-    loadSpecies()
-
-    return () => {
-      isActive = false
-      controller.abort()
-    }
-  }, [])
+export function useSpeciesCatalog(selectedHabitat, query, language) {
+  const resolvedLanguage = getSupportedLanguage(language)
+  const species = useMemo(
+    () =>
+      speciesCatalogSources.map((source) => ({
+        id: source.id,
+        name: source.name[resolvedLanguage] ?? source.name[DEFAULT_LANGUAGE],
+        habitatId: source.habitatId,
+        habitat: getHabitatLabel(source.habitatId, resolvedLanguage),
+        status: source.status[resolvedLanguage] ?? source.status[DEFAULT_LANGUAGE],
+        region: source.region[resolvedLanguage] ?? source.region[DEFAULT_LANGUAGE],
+        description:
+          source.fallbackDescription[resolvedLanguage] ??
+          source.fallbackDescription[DEFAULT_LANGUAGE] ??
+          '',
+        image: source.image ?? '',
+        sourceUrl: source.sourceUrl ?? `https://en.wikipedia.org/wiki/${source.wikipediaTitle}`,
+      })),
+    [resolvedLanguage],
+  )
 
   const habitats = useMemo(
-    () => ['Todos', ...new Set(species.map((item) => item.habitat))],
-    [species],
+    () => [
+      { id: 'all', label: getHabitatLabel('all', resolvedLanguage) },
+      ...[...new Set(species.map((item) => item.habitatId))].map((habitatId) => ({
+        id: habitatId,
+        label: getHabitatLabel(habitatId, resolvedLanguage),
+      })),
+    ],
+    [resolvedLanguage, species],
   )
 
   const normalizedQuery = query.trim().toLowerCase()
@@ -84,10 +43,12 @@ export function useSpeciesCatalog(selectedHabitat, query) {
   const filteredSpecies = useMemo(
     () =>
       species.filter((item) => {
-        const matchesHabitat = selectedHabitat === 'Todos' || item.habitat === selectedHabitat
+        const matchesHabitat = selectedHabitat === 'all' || item.habitatId === selectedHabitat
         const matchesQuery =
           normalizedQuery.length === 0 ||
-          `${item.name} ${item.región} ${item.status}`.toLowerCase().includes(normalizedQuery)
+          `${item.name} ${item.region} ${item.status} ${item.habitat}`
+            .toLowerCase()
+            .includes(normalizedQuery)
 
         return matchesHabitat && matchesQuery
       }),
@@ -98,7 +59,7 @@ export function useSpeciesCatalog(selectedHabitat, query) {
     species: filteredSpecies,
     habitats,
     totalSpecies: species.length,
-    isLoading,
-    error,
+    isLoading: false,
+    error: '',
   }
 }

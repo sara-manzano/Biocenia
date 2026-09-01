@@ -1,18 +1,25 @@
 import { memo } from 'react'
 import { ExternalLink, Heart } from 'lucide-react'
+import { useBiocenia } from '../context/useBiocenia.js'
 
 const SpeciesCard = memo(function SpeciesCard({ species, isFavorite, onToggleFavorite }) {
+  const { copy } = useBiocenia()
+
   return (
     <article className="species-card">
       {species.image ? (
         <div className="species-media">
           <img src={species.image} alt={species.name} className="species-image" />
+          <div className="species-media-overlay" />
         </div>
       ) : null}
 
       <div className="species-card-head">
         <div className="species-card-body">
-          <div className="species-status">{species.status}</div>
+          <div className="species-card-meta-row">
+            <div className="species-status">{species.status}</div>
+            <span className="species-region">{species.region}</span>
+          </div>
           <h3>{species.name}</h3>
           <p>{species.description}</p>
         </div>
@@ -24,13 +31,12 @@ const SpeciesCard = memo(function SpeciesCard({ species, isFavorite, onToggleFav
           aria-pressed={isFavorite}
         >
           <Heart className="badge-icon" aria-hidden="true" />
-          {isFavorite ? 'Guardada' : 'Guardar'}
+          {isFavorite ? copy.species.saved : copy.species.save}
         </button>
       </div>
 
       <div className="species-card-foot">
         <div className="species-card-tags">
-          <span className="species-region">{species.region}</span>
           <p className="card-meta">{species.habitat}</p>
         </div>
         {species.sourceUrl ? (
@@ -40,7 +46,7 @@ const SpeciesCard = memo(function SpeciesCard({ species, isFavorite, onToggleFav
             rel="noreferrer"
             className="source-link"
           >
-            Fuente
+            {copy.species.source}
             <ExternalLink className="badge-icon" aria-hidden="true" />
           </a>
         ) : null}

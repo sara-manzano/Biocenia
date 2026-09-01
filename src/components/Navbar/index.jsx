@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react'
 import { CalendarDays, Compass, Heart, Leaf, Menu, X } from 'lucide-react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import logo from '../../assets/logo.jpeg'
+import { LANGUAGE_OPTIONS } from '../../data/siteContent.js'
 import { useBiocenia } from '../../context/useBiocenia.js'
 import './Navbar.css'
-
-const NAV_LINKS = [
-	{ label: 'Inicio', to: '/', icon: Compass },
-	{ label: 'Especies', to: '/species', icon: Leaf },
-	{ label: 'Visita', to: '/visit', icon: CalendarDays },
-]
 
 export default function Navbar() {
 	const [isScrolled, setIsScrolled] = useState(false)
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-	const { favorites } = useBiocenia()
+	const { pathname } = useLocation()
+	const { copy, favorites, language, setLanguage } = useBiocenia()
+	const navLinks = [
+		{ label: copy.navbar.home, to: '/', icon: Compass },
+		{ label: copy.navbar.species, to: '/species', icon: Leaf },
+		{ label: copy.navbar.visit, to: '/visit', icon: CalendarDays },
+	]
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -33,6 +34,23 @@ export default function Navbar() {
 		}
 	}, [isMobileMenuOpen])
 
+	useEffect(() => {
+		setIsMobileMenuOpen(false)
+	}, [pathname])
+
+	useEffect(() => {
+		const mediaQuery = window.matchMedia('(min-width: 960px)')
+
+		const handleViewportChange = (event) => {
+			if (event.matches) {
+				setIsMobileMenuOpen(false)
+			}
+		}
+
+		mediaQuery.addEventListener('change', handleViewportChange)
+		return () => mediaQuery.removeEventListener('change', handleViewportChange)
+	}, [])
+
 	return (
 		<header className={isScrolled ? 'site-header is-scrolled' : 'site-header'}>
 			<div className="site-header-inner">
@@ -40,19 +58,19 @@ export default function Navbar() {
 					<Link
 						to="/"
 						className="brand-link"
-						aria-label="Biocenia - Ir a la página principal"
+						aria-label={copy.navbar.goHome}
 					>
-						<img className="brand-logo" src={logo} alt="Logo Biocenia" />
+						<img className="brand-logo" src={logo} alt={copy.navbar.brandAlt} />
 						<span className="brand-copy">
 							<span className="brand-name">
 								BIOCENIA<span>.</span>
 							</span>
-							<span className="brand-tagline">Reserva digital y planificador de visita</span>
+							<span className="brand-tagline">{copy.navbar.tagline}</span>
 						</span>
 					</Link>
 
-					<nav className="desktop-nav" aria-label="Navegación principal">
-						{NAV_LINKS.map((link) => (
+					<nav className="desktop-nav" aria-label={copy.navbar.navigation}>
+						{navLinks.map((link) => (
 							<NavLink
 								key={link.to}
 								to={link.to}
@@ -66,15 +84,29 @@ export default function Navbar() {
 					</nav>
 
 					<div className="desktop-tools">
-						<div className="desktop-status" aria-label="Estado general">
+						<select
+							id="desktop-language-picker"
+							className="language-picker"
+							value={language}
+							onChange={(event) => setLanguage(event.target.value)}
+							aria-label={copy.navbar.languageLabel}
+						>
+							{LANGUAGE_OPTIONS.map((option) => (
+								<option key={option.code} value={option.code}>
+									{option.label}
+								</option>
+							))}
+						</select>
+
+						<div className="desktop-status" aria-label={copy.navbar.overallStatus}>
 							<span className="status-chip status-chip-favorites">
 								<Heart className="badge-icon" aria-hidden="true" />
-								{favorites.length} guardadas
+								{copy.navbar.savedCount(favorites.length)}
 							</span>
 						</div>
 
 						<Link to="/visit" className="cta-link">
-							Reservar
+							{copy.navbar.reserve}
 						</Link>
 					</div>
 
@@ -83,22 +115,22 @@ export default function Navbar() {
 						onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
 						className="mobile-toggle"
 						aria-expanded={isMobileMenuOpen}
-						aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+						aria-label={isMobileMenuOpen ? copy.navbar.closeMenu : copy.navbar.openMenu}
 					>
 						{isMobileMenuOpen ? (
 							<X className="menu-icon" aria-hidden="true" />
 						) : (
 							<Menu className="menu-icon" aria-hidden="true" />
 						)}
-						<span>{isMobileMenuOpen ? 'Cerrar' : 'Menú'}</span>
+						<span>{isMobileMenuOpen ? copy.navbar.close : copy.navbar.menu}</span>
 					</button>
 				</div>
 			</div>
 
 			{isMobileMenuOpen && (
 				<div id="mobile-menu" className="mobile-menu">
-					<nav className="mobile-nav">
-						{NAV_LINKS.map((link) => (
+					<nav className="mobile-nav" aria-label={copy.navbar.navigation}>
+						{navLinks.map((link) => (
 							<NavLink
 								key={link.to}
 								to={link.to}
@@ -113,10 +145,23 @@ export default function Navbar() {
 							</NavLink>
 						))}
 						<div className="mobile-status">
-							<span className="status-chip status-chip-favorites">{favorites.length} guardadas</span>
+							<select
+								id="mobile-language-picker"
+								className="language-picker"
+								value={language}
+								onChange={(event) => setLanguage(event.target.value)}
+								aria-label={copy.navbar.languageLabel}
+							>
+								{LANGUAGE_OPTIONS.map((option) => (
+									<option key={option.code} value={option.code}>
+										{option.label}
+									</option>
+								))}
+							</select>
+							<span className="status-chip status-chip-favorites">{copy.navbar.savedCount(favorites.length)}</span>
 						</div>
 						<Link to="/visit" onClick={() => setIsMobileMenuOpen(false)} className="mobile-cta-link">
-							Reservar
+							{copy.navbar.reserve}
 						</Link>
 					</nav>
 				</div>
