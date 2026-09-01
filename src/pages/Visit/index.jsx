@@ -43,7 +43,7 @@ export default function VisitPage() {
           <p className="eyebrow">Visita</p>
           <h2>Cierra una visita con criterio para aprovecharla al máximo</h2>
           <p>
-            La idea es simple: dejar una fecha, un grupo y una intención clara para que el recorrido.
+            La idea es simple: selecciona una fecha, un grupo y una intención clara del recorrido.
           </p>
         </div>
       </section>
@@ -118,7 +118,7 @@ export default function VisitPage() {
             </div>
           </div>
           <p className="inline-note">
-            Si ya marcaste especies en el catálogo, este panel evita que la reserva quede desconectada de lo que realmente quieres ver.
+            Si ya marcaste especies en el catálogo, el panel permite que veas realmente lo que quieres ver.
           </p>
         </aside>
       </section>

@@ -35,7 +35,7 @@ export default function SpeciesPage() {
         <div className="page-header">
           <div className="page-caption">
             <p className="eyebrow">Catálogo</p>
-            <h2>Un catálogo breve y útil para ver las especies más relevantes</h2>
+            <h2>Un catálogo para que no te pierdas las especies más relevantes</h2>
             <p>
               Filtra rápido, selecciona tus favoritas y lee la información más relevante de cada especie.
             </p>
@@ -66,7 +66,7 @@ export default function SpeciesPage() {
                 type="search"
                 value={searchValue}
                 onChange={(event) => setSearchValue(event.target.value)}
-                placeholder="Jaguar, arrecife, vulnerable..."
+                placeholder="Jaguar, arrecife, vulnerables..."
               />
             </label>
 

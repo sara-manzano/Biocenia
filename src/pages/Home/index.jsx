@@ -106,6 +106,8 @@ export default function Home() {
             <InfoCard
               key={habitat.title}
               title={habitat.title}
+              image={habitat.image}
+              imageAlt={habitat.imageAlt}
               description={habitat.description}
               meta={habitat.meta}
             />

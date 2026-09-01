@@ -1,3 +1,10 @@
+import antartidaImage from '../assets/habitats/Antartida.jpeg'
+import arrecifeImage from '../assets/habitats/Arrecife.jpeg'
+import bosqueAfricanoImage from '../assets/habitats/Bosque africano.jpeg'
+import bosqueTempladoImage from '../assets/habitats/Bosque templado.jpeg'
+import junglaImage from '../assets/habitats/Jungla.jpeg'
+import sabanaImage from '../assets/habitats/Sabana.jpeg'
+
 export const impactMetrics = [
   {
     title: 'Seguimientos activos',
@@ -18,34 +25,46 @@ export const impactMetrics = [
 
 export const habitatsOverview = [
   {
-    title: 'Selva húmeda',
-    description: 'Un tramo denso, cálido y sonoro donde la observación pide bajar el ritmo.',
-    meta: 'Aquí el recorrido gana si miras comportamiento y no solo fichas de especie.',
+    title: 'Sabana',
+    image: sabanaImage,
+    imageAlt: 'Paisaje de sabana con vegetacion abierta y clima seco.',
+    description: 'Un paisaje abierto y soleado, con especies adaptadas a la sequía y la exposición.',
+    meta: 'La zona muestra como la desertificación y la presión humana afectan a la biodiversidad.',
   },
   {
     title: 'Costa y arrecife',
+    image: arrecifeImage,
+    imageAlt: 'Ecosistema marino de costa y arrecife con aguas claras.',
     description: 'La zona más frágil del conjunto: corrientes, temperatura y presión humana se sienten enseguida.',
-    meta: 'Funciona mejor cuando la visita entra con preguntas concretas y no solo a sacar fotos.',
+    meta: 'Hace falta un recorrido pausado y observación de especies indicadoras para entender la fragilidad del ecosistema.',
   },
   {
     title: 'Bosque templado',
+    image: bosqueTempladoImage,
+    imageAlt: 'Bosque templado frondoso con sombra y vegetacion densa.',
     description: 'Un paisaje de pausa: sombra, trayecto largo y especies que obligan a mirar dos veces.',
-    meta: 'Es la mejor puerta de entrada si el grupo viene mezclado entre curiosidad y cansancio.',
+    meta: 'Es un hábitat útil para explicar adaptación, migración y relaciones entre especies.',
   },
   {
     title: 'Jungla',
+    image: junglaImage,
+    imageAlt: 'Jungla humeda con vegetacion cerrada y abundante.',
     description: 'Vegetación cerrada, humedad alta y recorridos que priorizan especies adaptadas a la cobertura densa.',
     meta: 'Es una zona útil para enfocar la visita en observación pausada y biodiversidad vertical.',
   },
   {
     title: 'Polo Sur',
+    image: antartidaImage,
+    imageAlt: 'Paisaje helado de la Antartida con nieve y agua fria.',
     description: 'Ambiente extremo pensado para explicar frío, aislamiento y estrategias de supervivencia.',
-    meta: 'Aporta contraste dentro del recorrido y abre conversaciones sobre adaptación climática.',
+    meta: 'El hábitat muestra especies adaptadas a la vida en hielo y nieve, con estrategias de supervivencia únicas.',
   },
   {
     title: 'Bosque africano',
+    image: bosqueAfricanoImage,
+    imageAlt: 'Bosque africano con vegetacion espesa y ambiente sombreado.',
     description: 'Un hábitat de sombra irregular y actividad constante, con lectura clara de relaciones entre especies.',
-    meta: 'Funciona bien para visitas que buscan comparar comportamientos y dinámicas de gran fauna.',
+    meta: 'Visitas que buscan comparar comportamientos y dinámicas de gran fauna.',
   },
 
 ]
