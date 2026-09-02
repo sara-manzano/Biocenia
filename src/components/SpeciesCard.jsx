@@ -6,11 +6,15 @@ const SpeciesCard = memo(function SpeciesCard({ species, isFavorite, onToggleFav
   const { copy } = useBiocenia()
 
   return (
-    <article className="species-card">
+    <article className={species.image ? 'species-card has-species-image' : 'species-card'}>
       {species.image ? (
         <div className="species-media">
-          <img src={species.image} alt={species.name} className="species-image" />
-          <div className="species-media-overlay" />
+          <img
+            src={species.image}
+            alt={species.name}
+            className="species-image"
+            style={{ objectPosition: species.imagePosition }}
+          />
         </div>
       ) : null}
 

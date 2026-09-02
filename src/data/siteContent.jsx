@@ -5,6 +5,30 @@ import bosqueTempladoImage from '../assets/habitats/Bosque templado.webp'
 import junglaImage from '../assets/habitats/Jungla.webp'
 import sabanaImage from '../assets/habitats/Sabana.webp'
 
+export const speciesCatalogSourceImages = {
+  jaguar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Standing_jaguar.jpg/330px-Standing_jaguar.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+  'tortuga-carey': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Eretmochelys-imbricata-K%C3%A9lonia-2.JPG/330px-Eretmochelys-imbricata-K%C3%A9lonia-2.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+  'rana-cristal': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Cochranella_susatamai03.jpg/330px-Cochranella_susatamai03.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+  'guacamaya-roja': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Scarlet_macaw_%28Ara_macao_cyanopterus%29_Copan.jpg/330px-Scarlet_macaw_%28Ara_macao_cyanopterus%29_Copan.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+  'caballito-mar': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Hippocampus_hippocampus_%28on_Ascophyllum_nodosum%29.jpg/330px-Hippocampus_hippocampus_%28on_Ascophyllum_nodosum%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+  'lince-iberico': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Lince_ib%C3%A9rico_%28Lynx_pardinus%29%2C_Almuradiel%2C_Ciudad_Real%2C_Espa%C3%B1a%2C_2021-12-19%2C_DD_07.jpg/330px-Lince_ib%C3%A9rico_%28Lynx_pardinus%29%2C_Almuradiel%2C_Ciudad_Real%2C_Espa%C3%B1a%2C_2021-12-19%2C_DD_07.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+  'gorila-occidental': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Male_gorilla_in_SF_zoo.jpg/330px-Male_gorilla_in_SF_zoo.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+  'canguro-rojo': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Red_kangaroo_-_melbourne_zoo.jpg/330px-Red_kangaroo_-_melbourne_zoo.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+  'orangutan-borneo': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Tanjung_Puting30477.jpg/330px-Tanjung_Puting30477.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+}
+
+export const speciesCatalogImagePositions = {
+  jaguar: 'center 22%',
+  'tortuga-carey': 'center 24%',
+  'rana-cristal': 'center 38%',
+  'guacamaya-roja': 'center 32%',
+  'caballito-mar': 'center 44%',
+  'lince-iberico': 'center 36%',
+  'gorila-occidental': 'center 28%',
+  'canguro-rojo': 'center 34%',
+  'orangutan-borneo': 'center 30%',
+}
+
 export const DEFAULT_LANGUAGE = 'es'
 
 export const LANGUAGE_OPTIONS = [

@@ -3,6 +3,8 @@ import {
   DEFAULT_LANGUAGE,
   getHabitatLabel,
   getSupportedLanguage,
+  speciesCatalogImagePositions,
+  speciesCatalogSourceImages,
   speciesCatalogSources,
 } from '../data/siteContent.jsx'
 
@@ -21,7 +23,8 @@ export function useSpeciesCatalog(selectedHabitat, query, language) {
           source.fallbackDescription[resolvedLanguage] ??
           source.fallbackDescription[DEFAULT_LANGUAGE] ??
           '',
-        image: source.image ?? '',
+        image: source.image ?? speciesCatalogSourceImages[source.id] ?? '',
+        imagePosition: source.imagePosition ?? speciesCatalogImagePositions[source.id] ?? 'center',
         sourceUrl: source.sourceUrl ?? `https://en.wikipedia.org/wiki/${source.wikipediaTitle}`,
       })),
     [resolvedLanguage],
