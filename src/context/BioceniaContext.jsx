@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import BioceniaContext from './biocenia-context.js'
+import BioceniaContext from './biocenia-context.jsx'
 import {
   DEFAULT_LANGUAGE,
   HABITAT_LABELS,
@@ -7,57 +7,124 @@ import {
   getHabitatOptions,
   getSiteCopy,
   getSupportedLanguage,
-} from '../data/siteContent.js'
+} from '../data/siteContent.jsx'
 
-const LANGUAGE_STORAGE_KEY = 'biocenia-language'
-const HABITAT_STORAGE_KEY = 'biocenia-selected-habitat'
-const FAVORITES_STORAGE_KEY = 'biocenia-favorites'
-const RESERVATION_STORAGE_KEY = 'biocenia-reservation'
+const STORAGE_KEYS = {
+  LANGUAGE: 'biocenia-language',
+  HABITAT: 'biocenia-selected-habitat',
+  FAVORITES: 'biocenia-favorites',
+  RESERVATION: 'biocenia-reservation',
+}
+
+const DEFAULT_HABITAT = 'all'
+
+function normalizeHabitatSelection(habitatId) {
+  return typeof habitatId === 'string' && Object.hasOwn(HABITAT_LABELS, habitatId)
+    ? habitatId
+    : DEFAULT_HABITAT
+}
+
+function normalizeFavorites(favorites) {
+  return Array.isArray(favorites)
+    ? [...new Set(favorites.filter((favoriteId) => typeof favoriteId === 'string'))]
+    : []
+}
+
+function normalizeReservation(reservation) {
+  if (!reservation || typeof reservation !== 'object' || Array.isArray(reservation)) {
+    return null
+  }
+
+  const { name, email, date, visitors, notes, habitatId, reference, createdAt } = reservation
+
+  const cleanName = typeof name === 'string' ? name.trim() : ''
+  const cleanEmail = typeof email === 'string' ? email.trim() : ''
+  const cleanDate = typeof date === 'string' ? date : ''
+
+  if (!cleanName || !cleanEmail || !cleanDate) {
+    return null
+  }
+
+  return {
+    name: cleanName,
+    email: cleanEmail,
+    date: cleanDate,
+    visitors: typeof visitors === 'string' || typeof visitors === 'number' ? String(visitors) : '',
+    notes: typeof notes === 'string' ? notes.trim() : '',
+    habitatId: normalizeHabitatSelection(habitatId),
+    reference: typeof reference === 'string' ? reference : '',
+    createdAt: typeof createdAt === 'string' ? createdAt : '',
+  }
+}
 
 function readStoredValue(storageKey, fallbackValue) {
   if (typeof window === 'undefined') {
     return fallbackValue
   }
 
-  const storedValue = window.localStorage.getItem(storageKey)
-
-  if (!storedValue) {
-    return fallbackValue
-  }
-
   try {
+    const storedValue = window.localStorage.getItem(storageKey)
+
+    if (!storedValue) {
+      return fallbackValue
+    }
+
     return JSON.parse(storedValue)
   } catch {
     return fallbackValue
   }
 }
 
+function writeStoredValue(storageKey, value) {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  try {
+    window.localStorage.setItem(storageKey, JSON.stringify(value))
+  } catch (error) {
+    console.error(`Error guardando ${storageKey} en localStorage:`, error)
+  }
+}
+
+function removeStoredValue(storageKey) {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  try {
+    window.localStorage.removeItem(storageKey)
+  } catch (error) {
+    console.error(`Error eliminando ${storageKey} de localStorage:`, error)
+  }
+}
+
 export function BioceniaProvider({ children }) {
   const [selectedHabitat, setSelectedHabitat] = useState(() => {
-    const storedHabitat = readStoredValue(HABITAT_STORAGE_KEY, 'all')
-    return typeof storedHabitat === 'string' && Object.hasOwn(HABITAT_LABELS, storedHabitat)
-      ? storedHabitat
-      : 'all'
+    const storedHabitat = readStoredValue(STORAGE_KEYS.HABITAT, DEFAULT_HABITAT)
+    return normalizeHabitatSelection(storedHabitat)
   })
   const [favorites, setFavorites] = useState(() => {
-    const storedFavorites = readStoredValue(FAVORITES_STORAGE_KEY, [])
-    return Array.isArray(storedFavorites)
-      ? storedFavorites.filter((favoriteId) => typeof favoriteId === 'string')
-      : []
+    const storedFavorites = readStoredValue(STORAGE_KEYS.FAVORITES, [])
+    return normalizeFavorites(storedFavorites)
   })
   const [reservation, setReservation] = useState(() => {
-    const storedReservation = readStoredValue(RESERVATION_STORAGE_KEY, null)
-    return storedReservation && typeof storedReservation === 'object' ? storedReservation : null
+    const storedReservation = readStoredValue(STORAGE_KEYS.RESERVATION, null)
+    return normalizeReservation(storedReservation)
   })
   const [language, setLanguageState] = useState(() => {
     if (typeof window === 'undefined') {
       return DEFAULT_LANGUAGE
     }
 
-    return getSupportedLanguage(window.localStorage.getItem(LANGUAGE_STORAGE_KEY) ?? DEFAULT_LANGUAGE)
+    return getSupportedLanguage(window.localStorage.getItem(STORAGE_KEYS.LANGUAGE) ?? DEFAULT_LANGUAGE)
   })
 
   const toggleFavorite = useCallback((speciesId) => {
+    if (typeof speciesId !== 'string' || speciesId.length === 0) {
+      return
+    }
+
     setFavorites((currentFavorites) =>
       currentFavorites.includes(speciesId)
         ? currentFavorites.filter((currentId) => currentId !== speciesId)
@@ -66,31 +133,28 @@ export function BioceniaProvider({ children }) {
   }, [])
 
   const saveReservation = useCallback((nextReservation) => {
-    setReservation(nextReservation)
+    setReservation(normalizeReservation(nextReservation))
   }, [])
 
   const setLanguage = useCallback((nextLanguage) => {
     setLanguageState(getSupportedLanguage(nextLanguage))
   }, [])
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language)
-    }
+  const updateSelectedHabitat = useCallback((nextHabitat) => {
+    setSelectedHabitat(normalizeHabitatSelection(nextHabitat))
+  }, [])
 
+  useEffect(() => {
+    writeStoredValue(STORAGE_KEYS.LANGUAGE, language)
     document.documentElement.lang = language
   }, [language])
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(HABITAT_STORAGE_KEY, JSON.stringify(selectedHabitat))
-    }
+    writeStoredValue(STORAGE_KEYS.HABITAT, selectedHabitat)
   }, [selectedHabitat])
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favorites))
-    }
+    writeStoredValue(STORAGE_KEYS.FAVORITES, favorites)
   }, [favorites])
 
   useEffect(() => {
@@ -99,11 +163,11 @@ export function BioceniaProvider({ children }) {
     }
 
     if (reservation) {
-      window.localStorage.setItem(RESERVATION_STORAGE_KEY, JSON.stringify(reservation))
+      writeStoredValue(STORAGE_KEYS.RESERVATION, reservation)
       return
     }
 
-    window.localStorage.removeItem(RESERVATION_STORAGE_KEY)
+    removeStoredValue(STORAGE_KEYS.RESERVATION)
   }, [reservation])
 
   const copy = useMemo(() => getSiteCopy(language), [language])
@@ -117,7 +181,7 @@ export function BioceniaProvider({ children }) {
     () => ({
       copy,
       selectedHabitat,
-      setSelectedHabitat,
+      setSelectedHabitat: updateSelectedHabitat,
       favorites,
       toggleFavorite,
       reservation,
@@ -136,6 +200,7 @@ export function BioceniaProvider({ children }) {
       reservation,
       saveReservation,
       selectedHabitat,
+      updateSelectedHabitat,
       setLanguage,
       toggleFavorite,
     ],

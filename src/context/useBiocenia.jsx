@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import BioceniaContext from './biocenia-context.js'
+import BioceniaContext from './biocenia-context.jsx'
 
 export function useBiocenia() {
   const context = useContext(BioceniaContext)

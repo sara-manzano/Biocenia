@@ -1,9 +1,9 @@
-import antartidaImage from '../assets/habitats/Antartida.jpeg'
-import arrecifeImage from '../assets/habitats/Arrecife.jpeg'
-import bosqueAfricanoImage from '../assets/habitats/Bosque africano.jpeg'
-import bosqueTempladoImage from '../assets/habitats/Bosque templado.jpeg'
-import junglaImage from '../assets/habitats/Jungla.jpeg'
-import sabanaImage from '../assets/habitats/Sabana.jpeg'
+import antartidaImage from '../assets/habitats/Antartida.webp'
+import arrecifeImage from '../assets/habitats/Arrecife.webp'
+import bosqueAfricanoImage from '../assets/habitats/Bosque africano.webp'
+import bosqueTempladoImage from '../assets/habitats/Bosque templado.webp'
+import junglaImage from '../assets/habitats/Jungla.webp'
+import sabanaImage from '../assets/habitats/Sabana.webp'
 
 export const DEFAULT_LANGUAGE = 'es'
 

@@ -4,6 +4,28 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/src/assets/favicon-32x32.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      html,
+      body {
+        height: -webkit-fill-available;
+        height: 100%;
+        min-height: 100%;
+        margin: 0;
+        background-color: #081714;
+        background-image:
+          radial-gradient(circle at 12% 10%, rgba(247, 195, 84, 0.14), transparent 22%),
+          radial-gradient(circle at 88% 6%, rgba(124, 226, 207, 0.14), transparent 24%),
+          radial-gradient(circle at 50% 100%, rgba(243, 139, 60, 0.08), transparent 20%),
+          linear-gradient(180deg, #123f3a 0%, #0a211c 48%, #081714 100%);
+      }
+
+      #root {
+        min-height: 100vh;
+        min-height: 100dvh;
+        min-height: -webkit-fill-available;
+        min-height: 100svh;
+      }
+    </style>
     <title>biocenia</title>
   </head>
   <body>

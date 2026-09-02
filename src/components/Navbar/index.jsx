@@ -1,21 +1,38 @@
 import { useEffect, useState } from 'react'
 import { CalendarDays, Compass, Heart, Leaf, Menu, X } from 'lucide-react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import logo from '../../assets/logo.jpeg'
-import { LANGUAGE_OPTIONS } from '../../data/siteContent.js'
-import { useBiocenia } from '../../context/useBiocenia.js'
+import logo from '../../assets/logo.webp'
+import { LANGUAGE_OPTIONS } from '../../data/siteContent.jsx'
+import { useBiocenia } from '../../context/useBiocenia.jsx'
 import './Navbar.css'
 
 export default function Navbar() {
 	const [isScrolled, setIsScrolled] = useState(false)
-	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+	const [mobileMenuRoute, setMobileMenuRoute] = useState(null)
 	const { pathname } = useLocation()
 	const { copy, favorites, language, setLanguage } = useBiocenia()
+	const isMobileMenuOpen = mobileMenuRoute === pathname
 	const navLinks = [
 		{ label: copy.navbar.home, to: '/', icon: Compass },
 		{ label: copy.navbar.species, to: '/species', icon: Leaf },
 		{ label: copy.navbar.visit, to: '/visit', icon: CalendarDays },
 	]
+
+	const languagePicker = (
+		<select
+			id={isMobileMenuOpen ? 'mobile-language-picker' : 'desktop-language-picker'}
+			className="language-picker"
+			value={language}
+			onChange={(event) => setLanguage(event.target.value)}
+			aria-label={copy.navbar.languageLabel}
+		>
+			{LANGUAGE_OPTIONS.map((option) => (
+				<option key={option.code} value={option.code}>
+					{option.label}
+				</option>
+			))}
+		</select>
+	)
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -35,21 +52,36 @@ export default function Navbar() {
 	}, [isMobileMenuOpen])
 
 	useEffect(() => {
-		setIsMobileMenuOpen(false)
-	}, [pathname])
-
-	useEffect(() => {
 		const mediaQuery = window.matchMedia('(min-width: 960px)')
 
 		const handleViewportChange = (event) => {
 			if (event.matches) {
-				setIsMobileMenuOpen(false)
+				setMobileMenuRoute(null)
 			}
 		}
 
 		mediaQuery.addEventListener('change', handleViewportChange)
 		return () => mediaQuery.removeEventListener('change', handleViewportChange)
 	}, [])
+
+	function renderNavLink(link, className, closeOnClick = false) {
+		return (
+			<NavLink
+				key={link.to}
+				to={link.to}
+				end={link.to === '/'}
+				onClick={closeOnClick ? () => setMobileMenuRoute(null) : undefined}
+				className={({ isActive }) => (isActive ? `${className} is-active` : className)}
+			>
+				<link.icon className="nav-icon" aria-hidden="true" />
+				{link.label}
+			</NavLink>
+		)
+	}
+
+	function toggleMobileMenu() {
+		setMobileMenuRoute((currentRoute) => (currentRoute === pathname ? null : pathname))
+	}
 
 	return (
 		<header className={isScrolled ? 'site-header is-scrolled' : 'site-header'}>
@@ -58,6 +90,7 @@ export default function Navbar() {
 					<Link
 						to="/"
 						className="brand-link"
+						onClick={() => setMobileMenuRoute(null)}
 						aria-label={copy.navbar.goHome}
 					>
 						<img className="brand-logo" src={logo} alt={copy.navbar.brandAlt} />
@@ -70,33 +103,11 @@ export default function Navbar() {
 					</Link>
 
 					<nav className="desktop-nav" aria-label={copy.navbar.navigation}>
-						{navLinks.map((link) => (
-							<NavLink
-								key={link.to}
-								to={link.to}
-								end={link.to === '/'}
-								className={({ isActive }) => (isActive ? 'nav-link is-active' : 'nav-link')}
-							>
-								<link.icon className="nav-icon" aria-hidden="true" />
-								{link.label}
-							</NavLink>
-						))}
+						{navLinks.map((link) => renderNavLink(link, 'nav-link'))}
 					</nav>
 
 					<div className="desktop-tools">
-						<select
-							id="desktop-language-picker"
-							className="language-picker"
-							value={language}
-							onChange={(event) => setLanguage(event.target.value)}
-							aria-label={copy.navbar.languageLabel}
-						>
-							{LANGUAGE_OPTIONS.map((option) => (
-								<option key={option.code} value={option.code}>
-									{option.label}
-								</option>
-							))}
-						</select>
+						{languagePicker}
 
 						<div className="desktop-status" aria-label={copy.navbar.overallStatus}>
 							<span className="status-chip status-chip-favorites">
@@ -112,7 +123,7 @@ export default function Navbar() {
 
 					<button
 						type="button"
-						onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+						onClick={toggleMobileMenu}
 						className="mobile-toggle"
 						aria-expanded={isMobileMenuOpen}
 						aria-label={isMobileMenuOpen ? copy.navbar.closeMenu : copy.navbar.openMenu}
@@ -130,37 +141,12 @@ export default function Navbar() {
 			{isMobileMenuOpen && (
 				<div id="mobile-menu" className="mobile-menu">
 					<nav className="mobile-nav" aria-label={copy.navbar.navigation}>
-						{navLinks.map((link) => (
-							<NavLink
-								key={link.to}
-								to={link.to}
-								end={link.to === '/'}
-								onClick={() => setIsMobileMenuOpen(false)}
-								className={({ isActive }) =>
-									isActive ? 'mobile-nav-link is-active' : 'mobile-nav-link'
-								}
-							>
-								<link.icon className="nav-icon" aria-hidden="true" />
-								{link.label}
-							</NavLink>
-						))}
+						{navLinks.map((link) => renderNavLink(link, 'mobile-nav-link', true))}
 						<div className="mobile-status">
-							<select
-								id="mobile-language-picker"
-								className="language-picker"
-								value={language}
-								onChange={(event) => setLanguage(event.target.value)}
-								aria-label={copy.navbar.languageLabel}
-							>
-								{LANGUAGE_OPTIONS.map((option) => (
-									<option key={option.code} value={option.code}>
-										{option.label}
-									</option>
-								))}
-							</select>
+							{languagePicker}
 							<span className="status-chip status-chip-favorites">{copy.navbar.savedCount(favorites.length)}</span>
 						</div>
-						<Link to="/visit" onClick={() => setIsMobileMenuOpen(false)} className="mobile-cta-link">
+						<Link to="/visit" onClick={() => setMobileMenuRoute(null)} className="mobile-cta-link">
 							{copy.navbar.reserve}
 						</Link>
 					</nav>

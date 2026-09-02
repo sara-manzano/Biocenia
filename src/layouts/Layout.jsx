@@ -1,7 +1,7 @@
 import { Leaf, Mail, MapPin } from 'lucide-react'
 import { Link, Outlet } from 'react-router-dom'
 import Navbar from '../components/Navbar'
-import { useBiocenia } from '../context/useBiocenia.js'
+import { useBiocenia } from '../context/useBiocenia.jsx'
 
 function Layout() {
   const { copy, favorites, getHabitatLabel, reservation, selectedHabitat } = useBiocenia()

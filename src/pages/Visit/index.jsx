@@ -1,8 +1,8 @@
 import { CalendarDays, Heart, Leaf, Sparkles } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import InfoCard from '../../components/InfoCard'
-import { useBiocenia } from '../../context/useBiocenia.js'
-import { getVisitHighlights } from '../../data/siteContent.js'
+import { useBiocenia } from '../../context/useBiocenia.jsx'
+import { getVisitHighlights } from '../../data/siteContent.jsx'
 
 const EMPTY_FORM = {
   name: '',
@@ -37,37 +37,10 @@ function buildReservationReference(name) {
   return `BIO-${normalizedName || 'VIS'}-${suffix}`
 }
 
-export default function VisitPage() {
-  const { copy, favorites, getHabitatLabel, language, reservation, saveReservation, selectedHabitat } = useBiocenia()
+function ReservationForm({ copy, minVisitDate, onSave, reservation }) {
   const [formStatus, setFormStatus] = useState('idle')
   const [formMessage, setFormMessage] = useState('')
   const [formValues, setFormValues] = useState(() => getInitialFormValues(reservation))
-  const highlights = getVisitHighlights(language)
-  const minVisitDate = useMemo(() => new Date().toISOString().split('T')[0], [])
-  const reservationHabitatLabel = getHabitatLabel(reservation?.habitatId ?? selectedHabitat)
-  const reservationTimestamp = reservation?.createdAt
-    ? new Intl.DateTimeFormat(language, {
-        dateStyle: 'medium',
-        timeStyle: 'short',
-      }).format(new Date(reservation.createdAt))
-    : ''
-  const visitSnapshot = [
-    {
-      label: copy.visit.aside.activeRoute,
-      value: reservationHabitatLabel,
-      icon: Leaf,
-    },
-    {
-      label: copy.visit.aside.savedSpecies,
-      value: favorites.length,
-      icon: Heart,
-    },
-    {
-      label: copy.visit.aside.date,
-      value: reservation?.date || copy.visit.aside.none,
-      icon: CalendarDays,
-    },
-  ]
 
   function handleChange(event) {
     const { name, value } = event.target
@@ -128,6 +101,147 @@ export default function VisitPage() {
       return
     }
 
+    const savedReservation = onSave(nextReservation)
+
+    setFormStatus('success')
+    setFormMessage(`${copy.visit.form.successMessage} ${savedReservation.reference}.`)
+  }
+
+  return (
+    <form className="reservation-form" onSubmit={handleSubmit} noValidate>
+      <label className="field-label" htmlFor="visitor-name">
+        {copy.visit.form.responsibleName}
+        <input
+          id="visitor-name"
+          name="name"
+          className="field"
+          type="text"
+          value={formValues.name}
+          onChange={handleChange}
+          placeholder={copy.visit.form.namePlaceholder}
+          autoComplete="name"
+        />
+      </label>
+
+      <label className="field-label" htmlFor="visitor-email">
+        {copy.visit.form.contactEmail}
+        <input
+          id="visitor-email"
+          name="email"
+          className="field"
+          type="email"
+          value={formValues.email}
+          onChange={handleChange}
+          placeholder={copy.visit.form.emailPlaceholder}
+          autoComplete="email"
+        />
+      </label>
+
+      <div className="filters-row">
+        <label className="field-label" htmlFor="visitor-count">
+          {copy.visit.form.visitorCount}
+          <input
+            id="visitor-count"
+            name="visitors"
+            className="field"
+            type="number"
+            min="1"
+            max="25"
+            value={formValues.visitors}
+            onChange={handleChange}
+          />
+        </label>
+
+        <label className="field-label" htmlFor="visit-date">
+          {copy.visit.form.suggestedDate}
+          <input
+            id="visit-date"
+            name="date"
+            className="field"
+            type="date"
+            min={minVisitDate}
+            value={formValues.date}
+            onChange={handleChange}
+          />
+        </label>
+      </div>
+
+      <label className="field-label" htmlFor="visit-notes">
+        {copy.visit.form.visitIntent}
+        <textarea
+          id="visit-notes"
+          name="notes"
+          className="field-textarea"
+          value={formValues.notes}
+          onChange={handleChange}
+          placeholder={copy.visit.form.notesPlaceholder}
+        />
+      </label>
+
+      <button type="submit" className="primary-link">
+        {copy.visit.form.submit}
+      </button>
+
+      {formStatus !== 'idle' ? (
+        <div className={formStatus === 'success' ? 'form-feedback is-success' : 'form-feedback is-error'}>
+          {formMessage}
+        </div>
+      ) : null}
+    </form>
+  )
+}
+
+function SummaryItem({ label, value }) {
+  return (
+    <div className="summary-item">
+      <span>{label}</span>
+      <strong>{value}</strong>
+    </div>
+  )
+}
+
+export default function VisitPage() {
+  const { copy, favorites, getHabitatLabel, language, reservation, saveReservation, selectedHabitat } = useBiocenia()
+  const highlights = getVisitHighlights(language)
+  const minVisitDate = useMemo(() => new Date().toISOString().split('T')[0], [])
+  const reservationHabitatLabel = getHabitatLabel(reservation?.habitatId ?? selectedHabitat)
+  const reservationTimestamp = reservation?.createdAt
+    ? new Intl.DateTimeFormat(language, {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+      }).format(new Date(reservation.createdAt))
+    : ''
+  const visitSnapshot = [
+    {
+      label: copy.visit.aside.activeRoute,
+      value: reservationHabitatLabel,
+      icon: Leaf,
+    },
+    {
+      label: copy.visit.aside.savedSpecies,
+      value: favorites.length,
+      icon: Heart,
+    },
+    {
+      label: copy.visit.aside.date,
+      value: reservation?.date || copy.visit.aside.none,
+      icon: CalendarDays,
+    },
+  ]
+  const reservationSummaryItems = [
+    { label: copy.visit.aside.activeRoute, value: reservationHabitatLabel },
+    { label: copy.visit.aside.savedSpecies, value: favorites.length },
+    { label: copy.visit.aside.reservationName, value: reservation ? reservation.name : copy.visit.aside.none },
+    ...(reservation
+      ? [
+          { label: copy.visit.aside.reference, value: reservation.reference },
+          { label: copy.visit.aside.date, value: reservation.date },
+          { label: copy.visit.aside.visitors, value: reservation.visitors },
+        ]
+      : []),
+  ]
+
+  function handleSaveReservation(nextReservation) {
     const savedReservation = {
       ...nextReservation,
       habitatId: selectedHabitat,
@@ -136,10 +250,10 @@ export default function VisitPage() {
     }
 
     saveReservation(savedReservation)
-    setFormStatus('success')
-    setFormMessage(`${copy.visit.form.successMessage} ${savedReservation.reference}.`)
-    setFormValues({ ...EMPTY_FORM })
+    return savedReservation
   }
+
+  const reservationFormKey = reservation?.reference ?? reservation?.createdAt ?? 'new-reservation'
 
   return (
     <div className="page-stack">
@@ -187,119 +301,21 @@ export default function VisitPage() {
             <p>{copy.visit.description}</p>
           </div>
 
-          <form className="reservation-form" onSubmit={handleSubmit} noValidate>
-            <label className="field-label" htmlFor="visitor-name">
-              {copy.visit.form.responsibleName}
-              <input
-                id="visitor-name"
-                name="name"
-                className="field"
-                type="text"
-                value={formValues.name}
-                onChange={handleChange}
-                placeholder={copy.visit.form.namePlaceholder}
-                autoComplete="name"
-              />
-            </label>
-
-            <label className="field-label" htmlFor="visitor-email">
-              {copy.visit.form.contactEmail}
-              <input
-                id="visitor-email"
-                name="email"
-                className="field"
-                type="email"
-                value={formValues.email}
-                onChange={handleChange}
-                placeholder={copy.visit.form.emailPlaceholder}
-                autoComplete="email"
-              />
-            </label>
-
-            <div className="filters-row">
-              <label className="field-label" htmlFor="visitor-count">
-                {copy.visit.form.visitorCount}
-                <input
-                  id="visitor-count"
-                  name="visitors"
-                  className="field"
-                  type="number"
-                  min="1"
-                  max="25"
-                  value={formValues.visitors}
-                  onChange={handleChange}
-                />
-              </label>
-
-              <label className="field-label" htmlFor="visit-date">
-                {copy.visit.form.suggestedDate}
-                <input
-                  id="visit-date"
-                  name="date"
-                  className="field"
-                  type="date"
-                  min={minVisitDate}
-                  value={formValues.date}
-                  onChange={handleChange}
-                />
-              </label>
-            </div>
-
-            <label className="field-label" htmlFor="visit-notes">
-              {copy.visit.form.visitIntent}
-              <textarea
-                id="visit-notes"
-                name="notes"
-                className="field-textarea"
-                value={formValues.notes}
-                onChange={handleChange}
-                placeholder={copy.visit.form.notesPlaceholder}
-              />
-            </label>
-
-            <button type="submit" className="primary-link">
-              {copy.visit.form.submit}
-            </button>
-
-            {formStatus !== 'idle' ? (
-              <div className={formStatus === 'success' ? 'form-feedback is-success' : 'form-feedback is-error'}>
-                {formMessage}
-              </div>
-            ) : null}
-          </form>
+          <ReservationForm
+            key={reservationFormKey}
+            copy={copy}
+            minVisitDate={minVisitDate}
+            onSave={handleSaveReservation}
+            reservation={reservation}
+          />
         </div>
 
         <aside className="reservation-panel reservation-panel-summary">
           <h3>{copy.visit.aside.title}</h3>
           <div className="summary-list">
-            <div className="summary-item">
-              <span>{copy.visit.aside.activeRoute}</span>
-              <strong>{reservationHabitatLabel}</strong>
-            </div>
-            <div className="summary-item">
-              <span>{copy.visit.aside.savedSpecies}</span>
-              <strong>{favorites.length}</strong>
-            </div>
-            <div className="summary-item">
-              <span>{copy.visit.aside.reservationName}</span>
-              <strong>{reservation ? reservation.name : copy.visit.aside.none}</strong>
-            </div>
-            {reservation ? (
-              <>
-                <div className="summary-item">
-                  <span>{copy.visit.aside.reference}</span>
-                  <strong>{reservation.reference}</strong>
-                </div>
-                <div className="summary-item">
-                  <span>{copy.visit.aside.date}</span>
-                  <strong>{reservation.date}</strong>
-                </div>
-                <div className="summary-item">
-                  <span>{copy.visit.aside.visitors}</span>
-                  <strong>{reservation.visitors}</strong>
-                </div>
-              </>
-            ) : null}
+            {reservationSummaryItems.map((item) => (
+              <SummaryItem key={item.label} label={item.label} value={item.value} />
+            ))}
           </div>
           {reservationTimestamp ? <p className="inline-note">{copy.visit.aside.updatedAt(reservationTimestamp)}</p> : null}
           <p className="inline-note">{copy.visit.aside.note}</p>

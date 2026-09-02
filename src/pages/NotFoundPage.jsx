@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useBiocenia } from '../context/useBiocenia.js'
+import { useBiocenia } from '../context/useBiocenia.jsx'
 
 function NotFoundPage() {
   const { copy } = useBiocenia()

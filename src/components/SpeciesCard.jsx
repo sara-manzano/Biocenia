@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { ExternalLink, Heart } from 'lucide-react'
-import { useBiocenia } from '../context/useBiocenia.js'
+import { useBiocenia } from '../context/useBiocenia.jsx'
 
 const SpeciesCard = memo(function SpeciesCard({ species, isFavorite, onToggleFavorite }) {
   const { copy } = useBiocenia()

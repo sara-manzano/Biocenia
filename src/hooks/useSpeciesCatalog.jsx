@@ -4,7 +4,7 @@ import {
   getHabitatLabel,
   getSupportedLanguage,
   speciesCatalogSources,
-} from '../data/siteContent.js'
+} from '../data/siteContent.jsx'
 
 export function useSpeciesCatalog(selectedHabitat, query, language) {
   const resolvedLanguage = getSupportedLanguage(language)

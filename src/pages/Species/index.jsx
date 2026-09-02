@@ -2,8 +2,8 @@ import { Compass, Search, Sparkles } from 'lucide-react'
 import { useDeferredValue, useMemo, useState } from 'react'
 import InfoCard from '../../components/InfoCard'
 import SpeciesCard from '../../components/SpeciesCard'
-import { useBiocenia } from '../../context/useBiocenia.js'
-import { useSpeciesCatalog } from '../../hooks/useSpeciesCatalog.js'
+import { useBiocenia } from '../../context/useBiocenia.jsx'
+import { useSpeciesCatalog } from '../../hooks/useSpeciesCatalog.jsx'
 
 export default function SpeciesPage() {
   const [searchValue, setSearchValue] = useState('')

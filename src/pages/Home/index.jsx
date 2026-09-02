@@ -1,9 +1,9 @@
 import { Heart, Leaf } from 'lucide-react'
 import InfoCard from '../../components/InfoCard'
 import PageHero from '../../components/PageHero'
-import heroImage from '../../assets/logo.jpeg'
-import { useBiocenia } from '../../context/useBiocenia.js'
-import { getHabitatsOverview } from '../../data/siteContent.js'
+import heroImage from '../../assets/logo.webp'
+import { useBiocenia } from '../../context/useBiocenia.jsx'
+import { getHabitatsOverview } from '../../data/siteContent.jsx'
 
 export default function Home() {
   const { copy, favorites, getHabitatLabel, language, reservation, selectedHabitat } = useBiocenia()
