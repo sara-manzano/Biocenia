@@ -1,34 +1,13 @@
 import { useMemo } from 'react'
 import {
-  DEFAULT_LANGUAGE,
   getHabitatLabel,
+  getSpeciesCatalog,
   getSupportedLanguage,
-  speciesCatalogImagePositions,
-  speciesCatalogSourceImages,
-  speciesCatalogSources,
 } from '../data/siteContent.jsx'
 
 export function useSpeciesCatalog(selectedHabitat, query, language) {
   const resolvedLanguage = getSupportedLanguage(language)
-  const species = useMemo(
-    () =>
-      speciesCatalogSources.map((source) => ({
-        id: source.id,
-        name: source.name[resolvedLanguage] ?? source.name[DEFAULT_LANGUAGE],
-        habitatId: source.habitatId,
-        habitat: getHabitatLabel(source.habitatId, resolvedLanguage),
-        status: source.status[resolvedLanguage] ?? source.status[DEFAULT_LANGUAGE],
-        region: source.region[resolvedLanguage] ?? source.region[DEFAULT_LANGUAGE],
-        description:
-          source.fallbackDescription[resolvedLanguage] ??
-          source.fallbackDescription[DEFAULT_LANGUAGE] ??
-          '',
-        image: source.image ?? speciesCatalogSourceImages[source.id] ?? '',
-        imagePosition: source.imagePosition ?? speciesCatalogImagePositions[source.id] ?? 'center',
-        sourceUrl: source.sourceUrl ?? `https://en.wikipedia.org/wiki/${source.wikipediaTitle}`,
-      })),
-    [resolvedLanguage],
-  )
+  const species = useMemo(() => getSpeciesCatalog(resolvedLanguage), [resolvedLanguage])
 
   const habitats = useMemo(
     () => [

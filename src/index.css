@@ -722,6 +722,141 @@ p {
   gap: 22px;
 }
 
+.editorial-video-grid,
+.species-overview-video,
+.detail-page-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.96fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.editorial-video-copy,
+.species-overview-copy,
+.detail-hub-card,
+.detail-page-card,
+.detail-aside {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.012)),
+    var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.editorial-video-copy,
+.species-overview-copy,
+.detail-aside,
+.detail-hub-card {
+  padding: 22px;
+}
+
+.editorial-video-copy,
+.species-overview-copy,
+.detail-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.editorial-video-shell,
+.species-overview-shell,
+.detail-media-shell {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 21, 24, 0.64);
+  box-shadow: var(--shadow);
+}
+
+.editorial-video-shell,
+.species-overview-shell {
+  min-height: 320px;
+}
+
+.editorial-video-player,
+.detail-video-frame,
+.detail-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+}
+
+.editorial-video-player,
+.detail-video-frame {
+  object-fit: cover;
+  background: rgba(8, 21, 24, 0.7);
+}
+
+.detail-image {
+  min-height: 420px;
+  object-fit: cover;
+}
+
+.species-overview-video {
+  position: relative;
+  z-index: 1;
+}
+
+.detail-hub-section {
+  gap: 20px;
+}
+
+.detail-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.detail-hub-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.detail-hub-card h3,
+.detail-page-caption h2 {
+  margin-top: 12px;
+}
+
+.detail-hub-link {
+  width: fit-content;
+}
+
+.detail-page-card {
+  padding: 28px;
+}
+
+.detail-page-header {
+  margin-bottom: 22px;
+}
+
+.detail-media-shell {
+  min-height: 420px;
+}
+
+.detail-aside {
+  justify-content: space-between;
+}
+
+.detail-meta-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-note {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-note strong {
+  color: var(--heading);
+}
+
 .home-overview-section {
   gap: 20px;
 }
@@ -1540,12 +1675,14 @@ p {
   .home-overview-grid,
   .reservation-layout,
   .species-summary-grid,
+  .editorial-video-grid,
+  .species-overview-video,
+  .detail-page-grid,
   .metric-grid,
   .card-grid,
   .species-grid,
-  .detail-grid,
   .filters-row,
-  .editorial-grid {
+  .detail-hub-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1670,7 +1807,12 @@ p {
   .home-planning-card,
   .home-editorial-card,
   .species-hero-card,
-  .species-summary-panel {
+  .species-summary-panel,
+  .editorial-video-copy,
+  .species-overview-copy,
+  .detail-aside,
+  .detail-page-card,
+  .detail-hub-card {
     padding: 20px;
   }
 
@@ -1690,12 +1832,21 @@ p {
   .metric-grid,
   .card-grid,
   .species-grid,
-  .detail-grid,
+  .detail-page-grid,
+  .detail-hub-grid,
   .filters-row,
-  .editorial-grid,
+  .editorial-video-grid,
+  .species-overview-video,
   .home-overview-grid,
   .reservation-layout {
     gap: 16px;
+  }
+
+  .editorial-video-shell,
+  .species-overview-shell,
+  .detail-media-shell,
+  .detail-image {
+    min-height: 260px;
   }
 
   .visit-hero-badges {

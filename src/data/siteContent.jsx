@@ -148,6 +148,13 @@ function createLanguageCopy(copy) {
         title: 'Zonas para orientar el recorrido',
         ...copy?.home?.habitats,
       },
+      editorialVideo: {
+        eyebrow: 'Video marino',
+        title: 'Medusas flotando en un arrecife de coral',
+        description: 'Visita el arrecife de coral y observa cómo se mueven las medusas en el agua.',
+        sourceLabel: 'Fuente del video',
+        ...copy?.home?.editorialVideo,
+      },
     },
     species: {
       eyebrow: 'Catálogo',
@@ -163,6 +170,8 @@ function createLanguageCopy(copy) {
       searchLabel: 'Buscar por nombre, hábitat o especie',
       searchPlaceholder: 'Jaguar, arrecife, vulnerables...',
       habitatLabel: 'Hábitat seleccionado',
+      statusLabel: 'Estado',
+      regionLabel: 'Región',
       quickFilters: 'Filtros rápidos por hábitat',
       loading: 'Cargando especies...',
       emptyEyebrow: 'Sin resultados',
@@ -172,6 +181,25 @@ function createLanguageCopy(copy) {
       save: 'Guardar',
       saved: 'Guardada',
       source: 'Fuente',
+      overviewVideo: {
+        eyebrow: 'Sabana',
+        title:'Ñus en su migración anual',
+        description: 'Los ñus son animales que migran en grandes manadas a lo largo de la sabana africana. Su migración anual es un espectáculo natural que atrae a fotógrafos de todo el mundo.',
+        sourceLabel: 'Fuente',
+      },
+      detailHub: {
+        eyebrow: 'Fichas de nuestras especies',
+        title: '¿Quieres obtener más información de cada especie?',
+        description: 'Puedes abrir una ficha de detalle por especie.',
+        action: 'Abrir',
+      },
+      detail: {
+        eyebrow: 'Ficha de especie',
+        back: 'Volver al catálogo',
+        noVideo: 'Todavía no hay un video verificado',
+        noVideoDescription: 'La vista queda preparada para mostrarlo solo cuando exista una fuente que coincida con la especie exacta.',
+        sourceLabel: 'Fuente',
+      },
       ...copy?.species,
     },
     visit: {
@@ -876,6 +904,47 @@ export function getVisitHighlights(language = DEFAULT_LANGUAGE) {
 export const impactMetrics = localizedCollections.impactMetrics.es
 export const habitatsOverview = localizedCollections.habitatsOverview.es
 export const visitHighlights = localizedCollections.visitHighlights.es
+
+export const editorialVideos = {
+  marine: {
+    videoUrl: 'https://cdn.pixabay.com/video/2022/03/15/110877-689510466_large.mp4',
+    sourceUrl: 'https://pixabay.com/es/videos/medusa-submarino-oceano-agua-110877/',
+  },
+  wildlife: {
+    videoUrl: 'https://cdn.pixabay.com/video/2022/08/10/127475-743515470_large.mp4',
+    sourceUrl: 'https://pixabay.com/es/videos/fauna-silvestre-animales-salvajes-127475/',
+  },
+}
+
+export function getEditorialVideos() {
+  return editorialVideos
+}
+
+export function getSpeciesCatalog(language = DEFAULT_LANGUAGE) {
+  const resolvedLanguage = getSupportedLanguage(language)
+
+  return speciesCatalogSources.map((source) => ({
+    id: source.id,
+    name: source.name[resolvedLanguage] ?? source.name[DEFAULT_LANGUAGE],
+    habitatId: source.habitatId,
+    habitat: getHabitatLabel(source.habitatId, resolvedLanguage),
+    status: source.status[resolvedLanguage] ?? source.status[DEFAULT_LANGUAGE],
+    region: source.region[resolvedLanguage] ?? source.region[DEFAULT_LANGUAGE],
+    description:
+      source.fallbackDescription[resolvedLanguage] ??
+      source.fallbackDescription[DEFAULT_LANGUAGE] ??
+      '',
+    image: source.image ?? speciesCatalogSourceImages[source.id] ?? '',
+    imagePosition: source.imagePosition ?? speciesCatalogImagePositions[source.id] ?? 'center',
+    videoUrl: source.videoUrl ?? '',
+    videoEmbedUrl: source.videoEmbedUrl ?? '',
+    sourceUrl: source.sourceUrl ?? `https://en.wikipedia.org/wiki/${source.wikipediaTitle}`,
+  }))
+}
+
+export function getSpeciesById(speciesId, language = DEFAULT_LANGUAGE) {
+  return getSpeciesCatalog(language).find((species) => species.id === speciesId) ?? null
+}
 
 export const speciesCatalogSources = [
   { id: 'jaguar', wikipediaTitle: 'Jaguar', habitatId: 'rainforest', name: { en: 'Jaguar', es: 'Jaguar', ca: 'Jaguar', gl: 'Xaguar', eu: 'Jaguarra', fr: 'Jaguar' }, status: { en: 'Vulnerable', es: 'Vulnerable', ca: 'Vulnerable', gl: 'Vulnerable', eu: 'Kaltebera', fr: 'Vulnerable' }, region: { en: 'Amazon', es: 'Amazonía', ca: 'Amazònia', gl: 'Amazonia', eu: 'Amazonia', fr: 'Amazonie' }, fallbackDescription: { en: 'A key predator for explaining trophic balance and the conservation of continuous forest.', es: 'Depredador clave para explicar el equilibrio trófico y la conservación del bosque continuo.', ca: 'Depredador clau per explicar l equilibri tròfic i la conservació del bosc continu.', gl: 'Depredador clave para explicar o equilibrio trófico e a conservación do bosque continuo.', eu: 'Harrapari giltzarria kate trofikoa eta baso jarraituaren kontserbazioa azaltzeko.', fr: 'Prédateur clé pour expliquer l équilibre trophique et la conservation de la forêt continue.' } },

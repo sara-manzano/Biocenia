@@ -3,11 +3,12 @@ import InfoCard from '../../components/InfoCard'
 import PageHero from '../../components/PageHero'
 import heroImage from '../../assets/logo.webp'
 import { useBiocenia } from '../../context/useBiocenia.jsx'
-import { getHabitatsOverview } from '../../data/siteContent.jsx'
+import { getEditorialVideos, getHabitatsOverview } from '../../data/siteContent.jsx'
 
 export default function Home() {
   const { copy, favorites, getHabitatLabel, language, reservation, selectedHabitat } = useBiocenia()
   const habitatCards = getHabitatsOverview(language)
+  const { marine } = getEditorialVideos()
 
   const visitSnapshot = [
     {
@@ -62,6 +63,29 @@ export default function Home() {
           </div>
         }
       />
+
+      <section className="content-section editorial-video-section">
+        <div className="editorial-video-grid">
+          <div className="editorial-video-copy">
+            <p className="eyebrow">{copy.home.editorialVideo.eyebrow}</p>
+            <h2>{copy.home.editorialVideo.title}</h2>
+            <p>{copy.home.editorialVideo.description}</p>
+            <a href={marine.sourceUrl} target="_blank" rel="noreferrer" className="source-link">
+              {copy.home.editorialVideo.sourceLabel}
+            </a>
+          </div>
+
+          <div className="editorial-video-shell">
+            <video
+              className="editorial-video-player"
+              src={marine.videoUrl}
+              controls
+              preload="metadata"
+              playsInline
+            />
+          </div>
+        </div>
+      </section>
 
       <section className="content-section home-habitats-section">
         <div className="section-heading">

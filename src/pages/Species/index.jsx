@@ -1,14 +1,17 @@
 import { Compass, Search, Sparkles } from 'lucide-react'
 import { useDeferredValue, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import InfoCard from '../../components/InfoCard'
 import SpeciesCard from '../../components/SpeciesCard'
 import { useBiocenia } from '../../context/useBiocenia.jsx'
+import { getEditorialVideos } from '../../data/siteContent.jsx'
 import { useSpeciesCatalog } from '../../hooks/useSpeciesCatalog.jsx'
 
 export default function SpeciesPage() {
   const [searchValue, setSearchValue] = useState('')
   const deferredSearch = useDeferredValue(searchValue)
   const { copy, favorites, language, selectedHabitat, setSelectedHabitat, toggleFavorite } = useBiocenia()
+  const { wildlife } = getEditorialVideos()
   const { species, habitats, totalSpecies, isLoading, error } = useSpeciesCatalog(
     selectedHabitat,
     deferredSearch,
@@ -69,6 +72,27 @@ export default function SpeciesPage() {
                   <span>{habitats.find((habitat) => habitat.id === selectedHabitat)?.label ?? habitats[0]?.label}</span>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div className="species-overview-video">
+            <div className="species-overview-copy">
+              <p className="eyebrow">{copy.species.overviewVideo.eyebrow}</p>
+              <h3>{copy.species.overviewVideo.title}</h3>
+              <p>{copy.species.overviewVideo.description}</p>
+              <a href={wildlife.sourceUrl} target="_blank" rel="noreferrer" className="source-link">
+                {copy.species.overviewVideo.sourceLabel}
+              </a>
+            </div>
+
+            <div className="species-overview-shell">
+              <video
+                className="editorial-video-player"
+                src={wildlife.videoUrl}
+                controls
+                preload="metadata"
+                playsInline
+              />
             </div>
           </div>
         </div>
@@ -145,6 +169,33 @@ export default function SpeciesPage() {
               isFavorite={favorites.includes(item.id)}
               onToggleFavorite={toggleFavorite}
             />
+          ))}
+        </div>
+      </section>
+
+      <section className="content-section detail-hub-section">
+        <div className="section-heading detail-hub-heading">
+          <p className="eyebrow">{copy.species.detailHub.eyebrow}</p>
+          <h2>{copy.species.detailHub.title}</h2>
+          <p>{copy.species.detailHub.description}</p>
+        </div>
+
+        <div className="detail-hub-grid">
+          {species.map((item) => (
+            <article key={item.id} className="detail-hub-card">
+              <div>
+                <div className="species-card-meta-row">
+                  <div className="species-status">{item.status}</div>
+                  <span className="species-region">{item.region}</span>
+                </div>
+                <h3>{item.name}</h3>
+                <p>{item.description}</p>
+              </div>
+
+              <Link className="secondary-link detail-hub-link" to={`/species/${item.id}`}>
+                {copy.species.detailHub.action}
+              </Link>
+            </article>
           ))}
         </div>
       </section>
