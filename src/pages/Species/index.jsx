@@ -1,17 +1,26 @@
 import { Compass, Search, Sparkles } from 'lucide-react'
 import { useDeferredValue, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 import InfoCard from '../../components/InfoCard'
 import SpeciesCard from '../../components/SpeciesCard'
-import { useBiocenia } from '../../context/useBiocenia.jsx'
+import {
+  useBioceniaCopy,
+  useBioceniaFavorites,
+  useBioceniaHabitat,
+  useBioceniaLanguage,
+} from '../../context/useBiocenia.jsx'
 import { getEditorialVideos } from '../../data/siteContent.jsx'
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion.jsx'
 import { useSpeciesCatalog } from '../../hooks/useSpeciesCatalog.jsx'
 
 export default function SpeciesPage() {
   const [searchValue, setSearchValue] = useState('')
   const deferredSearch = useDeferredValue(searchValue)
-  const { copy, favorites, language, selectedHabitat, setSelectedHabitat, toggleFavorite } = useBiocenia()
+  const copy = useBioceniaCopy()
+  const { favorites, toggleFavorite } = useBioceniaFavorites()
+  const { selectedHabitat, setSelectedHabitat } = useBioceniaHabitat()
+  const { language } = useBioceniaLanguage()
   const { wildlife } = getEditorialVideos()
+  const prefersReducedMotion = usePrefersReducedMotion()
   const { species, habitats, totalSpecies, isLoading, error } = useSpeciesCatalog(
     selectedHabitat,
     deferredSearch,
@@ -89,9 +98,13 @@ export default function SpeciesPage() {
               <video
                 className="editorial-video-player"
                 src={wildlife.videoUrl}
-                controls
-                preload="metadata"
+                aria-label={copy.species.overviewVideo.title}
+                autoPlay={!prefersReducedMotion}
+                controls={prefersReducedMotion}
+                loop
+                muted
                 playsInline
+                preload="auto"
               />
             </div>
           </div>
@@ -150,9 +163,9 @@ export default function SpeciesPage() {
         </div>
       </section>
 
-      <section className="content-section species-catalog-section">
-        {isLoading ? <div className="inline-note">{copy.species.loading}</div> : null}
-        {error ? <div className="form-feedback is-error">{error}</div> : null}
+      <section className="content-section species-catalog-section" aria-busy={isLoading}>
+        {isLoading ? <div className="inline-note" role="status">{copy.species.loading}</div> : null}
+        {error ? <div className="form-feedback is-error">{copy.species.loadError}</div> : null}
         {!isLoading && !error && species.length === 0 ? (
           <div className="empty-state">
             <p className="eyebrow">{copy.species.emptyEyebrow}</p>
@@ -169,33 +182,6 @@ export default function SpeciesPage() {
               isFavorite={favorites.includes(item.id)}
               onToggleFavorite={toggleFavorite}
             />
-          ))}
-        </div>
-      </section>
-
-      <section className="content-section detail-hub-section">
-        <div className="section-heading detail-hub-heading">
-          <p className="eyebrow">{copy.species.detailHub.eyebrow}</p>
-          <h2>{copy.species.detailHub.title}</h2>
-          <p>{copy.species.detailHub.description}</p>
-        </div>
-
-        <div className="detail-hub-grid">
-          {species.map((item) => (
-            <article key={item.id} className="detail-hub-card">
-              <div>
-                <div className="species-card-meta-row">
-                  <div className="species-status">{item.status}</div>
-                  <span className="species-region">{item.region}</span>
-                </div>
-                <h3>{item.name}</h3>
-                <p>{item.description}</p>
-              </div>
-
-              <Link className="secondary-link detail-hub-link" to={`/species/${item.id}`}>
-                {copy.species.detailHub.action}
-              </Link>
-            </article>
           ))}
         </div>
       </section>

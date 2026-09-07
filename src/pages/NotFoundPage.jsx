@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
-import { useBiocenia } from '../context/useBiocenia.jsx'
+import { useBioceniaCopy } from '../context/useBiocenia.jsx'
 
 function NotFoundPage() {
-  const { copy } = useBiocenia()
+  const copy = useBioceniaCopy()
 
   return (
     <section className="content-section">

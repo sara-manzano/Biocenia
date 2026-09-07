@@ -3,14 +3,16 @@ import { CalendarDays, Compass, Heart, Leaf, Menu, X } from 'lucide-react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import logo from '../../assets/logo.webp'
 import { LANGUAGE_OPTIONS } from '../../data/siteContent.jsx'
-import { useBiocenia } from '../../context/useBiocenia.jsx'
+import { useBioceniaCopy, useBioceniaFavorites, useBioceniaLanguage } from '../../context/useBiocenia.jsx'
 import './Navbar.css'
 
 export default function Navbar() {
 	const [isScrolled, setIsScrolled] = useState(false)
 	const [mobileMenuRoute, setMobileMenuRoute] = useState(null)
 	const { pathname } = useLocation()
-	const { copy, favorites, language, setLanguage } = useBiocenia()
+	const copy = useBioceniaCopy()
+	const { favorites } = useBioceniaFavorites()
+	const { language, setLanguage } = useBioceniaLanguage()
 	const isMobileMenuOpen = mobileMenuRoute === pathname
 	const navLinks = [
 		{ label: copy.navbar.home, to: '/', icon: Compass },
@@ -24,6 +26,7 @@ export default function Navbar() {
 			className="language-picker"
 			value={language}
 			onChange={(event) => setLanguage(event.target.value)}
+			name="language"
 			aria-label={copy.navbar.languageLabel}
 		>
 			{LANGUAGE_OPTIONS.map((option) => (
@@ -125,6 +128,7 @@ export default function Navbar() {
 						type="button"
 						onClick={toggleMobileMenu}
 						className="mobile-toggle"
+						aria-controls="mobile-menu"
 						aria-expanded={isMobileMenuOpen}
 						aria-label={isMobileMenuOpen ? copy.navbar.closeMenu : copy.navbar.openMenu}
 					>

@@ -1,13 +1,69 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   getHabitatLabel,
   getSpeciesCatalog,
   getSupportedLanguage,
+  localizeSpeciesCatalogEntries,
 } from '../data/siteContent.jsx'
+
+const SPECIES_CATALOG_ENDPOINT = '/api/species-catalog.json'
 
 export function useSpeciesCatalog(selectedHabitat, query, language) {
   const resolvedLanguage = getSupportedLanguage(language)
-  const species = useMemo(() => getSpeciesCatalog(resolvedLanguage), [resolvedLanguage])
+  const [catalogEntries, setCatalogEntries] = useState(null)
+  const [hasFetchError, setHasFetchError] = useState(false)
+
+  useEffect(() => {
+    const controller = new AbortController()
+    let isActive = true
+
+    async function loadSpeciesCatalog() {
+      setHasFetchError(false)
+
+      try {
+        const response = await fetch(SPECIES_CATALOG_ENDPOINT, { signal: controller.signal })
+
+        if (!response.ok) {
+          throw new Error(`Species catalog request failed with status ${response.status}`)
+        }
+
+        const payload = await response.json()
+
+        if (!Array.isArray(payload)) {
+          throw new Error('Species catalog payload must be an array')
+        }
+
+        if (!isActive) {
+          return
+        }
+
+        setCatalogEntries(payload)
+      } catch (error) {
+        if (!isActive || error.name === 'AbortError') {
+          return
+        }
+
+        setHasFetchError(true)
+        setCatalogEntries(null)
+      }
+    }
+
+    loadSpeciesCatalog()
+
+    return () => {
+      isActive = false
+      controller.abort()
+    }
+  }, [])
+
+  const species = useMemo(
+    () => (catalogEntries !== null
+      ? localizeSpeciesCatalogEntries(catalogEntries, resolvedLanguage)
+      : getSpeciesCatalog(resolvedLanguage)),
+    [catalogEntries, resolvedLanguage],
+  )
+
+  const normalizedQuery = useMemo(() => query.trim().toLowerCase(), [query])
 
   const habitats = useMemo(
     () => [
@@ -19,8 +75,6 @@ export function useSpeciesCatalog(selectedHabitat, query, language) {
     ],
     [resolvedLanguage, species],
   )
-
-  const normalizedQuery = query.trim().toLowerCase()
 
   const filteredSpecies = useMemo(
     () =>
@@ -41,7 +95,7 @@ export function useSpeciesCatalog(selectedHabitat, query, language) {
     species: filteredSpecies,
     habitats,
     totalSpecies: species.length,
-    isLoading: false,
-    error: '',
+    isLoading: catalogEntries === null && !hasFetchError,
+    error: hasFetchError ? 'catalog-fetch-failed' : '',
   }
 }

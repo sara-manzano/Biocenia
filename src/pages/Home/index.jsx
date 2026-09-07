@@ -2,13 +2,25 @@ import { Heart, Leaf } from 'lucide-react'
 import InfoCard from '../../components/InfoCard'
 import PageHero from '../../components/PageHero'
 import heroImage from '../../assets/logo.webp'
-import { useBiocenia } from '../../context/useBiocenia.jsx'
+import {
+  useBioceniaCopy,
+  useBioceniaFavorites,
+  useBioceniaHabitat,
+  useBioceniaLanguage,
+  useBioceniaReservation,
+} from '../../context/useBiocenia.jsx'
 import { getEditorialVideos, getHabitatsOverview } from '../../data/siteContent.jsx'
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion.jsx'
 
 export default function Home() {
-  const { copy, favorites, getHabitatLabel, language, reservation, selectedHabitat } = useBiocenia()
+  const copy = useBioceniaCopy()
+  const { favorites } = useBioceniaFavorites()
+  const { getHabitatLabel, selectedHabitat } = useBioceniaHabitat()
+  const { language } = useBioceniaLanguage()
+  const { reservation } = useBioceniaReservation()
   const habitatCards = getHabitatsOverview(language)
   const { marine } = getEditorialVideos()
+  const prefersReducedMotion = usePrefersReducedMotion()
 
   const visitSnapshot = [
     {
@@ -79,9 +91,13 @@ export default function Home() {
             <video
               className="editorial-video-player"
               src={marine.videoUrl}
-              controls
-              preload="metadata"
+              aria-label={copy.home.editorialVideo.title}
+              autoPlay={!prefersReducedMotion}
+              controls={prefersReducedMotion}
+              loop
+              muted
               playsInline
+              preload="auto"
             />
           </div>
         </div>

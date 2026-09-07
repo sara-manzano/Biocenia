@@ -1,10 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import BioceniaContext from './biocenia-context.jsx'
+import {
+  BioceniaCopyContext,
+  BioceniaFavoritesContext,
+  BioceniaHabitatContext,
+  BioceniaLanguageContext,
+  BioceniaReservationContext,
+} from './biocenia-context.jsx'
 import {
   DEFAULT_LANGUAGE,
   HABITAT_LABELS,
   getHabitatLabel,
-  getHabitatOptions,
   getSiteCopy,
   getSupportedLanguage,
 } from '../data/siteContent.jsx'
@@ -171,40 +176,53 @@ export function BioceniaProvider({ children }) {
   }, [reservation])
 
   const copy = useMemo(() => getSiteCopy(language), [language])
-  const habitatOptions = useMemo(() => getHabitatOptions(language), [language])
   const localizeHabitat = useCallback(
     (habitatId) => getHabitatLabel(habitatId, language),
     [language],
   )
 
-  const value = useMemo(
+  const habitatValue = useMemo(
     () => ({
-      copy,
       selectedHabitat,
       setSelectedHabitat: updateSelectedHabitat,
-      favorites,
-      toggleFavorite,
-      reservation,
-      saveReservation,
-      language,
-      setLanguage,
-      habitatOptions,
       getHabitatLabel: localizeHabitat,
     }),
-    [
-      copy,
-      favorites,
-      habitatOptions,
-      language,
-      localizeHabitat,
-      reservation,
-      saveReservation,
-      selectedHabitat,
-      updateSelectedHabitat,
-      setLanguage,
-      toggleFavorite,
-    ],
+    [localizeHabitat, selectedHabitat, updateSelectedHabitat],
   )
 
-  return <BioceniaContext.Provider value={value}>{children}</BioceniaContext.Provider>
+  const favoritesValue = useMemo(
+    () => ({
+      favorites,
+      toggleFavorite,
+    }),
+    [favorites, toggleFavorite],
+  )
+
+  const reservationValue = useMemo(
+    () => ({
+      reservation,
+      saveReservation,
+    }),
+    [reservation, saveReservation],
+  )
+
+  const languageValue = useMemo(
+    () => ({
+      language,
+      setLanguage,
+    }),
+    [language, setLanguage],
+  )
+
+  return (
+    <BioceniaLanguageContext.Provider value={languageValue}>
+      <BioceniaCopyContext.Provider value={copy}>
+        <BioceniaHabitatContext.Provider value={habitatValue}>
+          <BioceniaFavoritesContext.Provider value={favoritesValue}>
+            <BioceniaReservationContext.Provider value={reservationValue}>{children}</BioceniaReservationContext.Provider>
+          </BioceniaFavoritesContext.Provider>
+        </BioceniaHabitatContext.Provider>
+      </BioceniaCopyContext.Provider>
+    </BioceniaLanguageContext.Provider>
+  )
 }

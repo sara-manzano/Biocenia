@@ -5,28 +5,43 @@ import bosqueTempladoImage from '../assets/habitats/Bosque templado.webp'
 import junglaImage from '../assets/habitats/Jungla.webp'
 import sabanaImage from '../assets/habitats/Sabana.webp'
 
-export const speciesCatalogSourceImages = {
-  jaguar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Standing_jaguar.jpg/330px-Standing_jaguar.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
-  'tortuga-carey': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Eretmochelys-imbricata-K%C3%A9lonia-2.JPG/330px-Eretmochelys-imbricata-K%C3%A9lonia-2.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
-  'rana-cristal': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Cochranella_susatamai03.jpg/330px-Cochranella_susatamai03.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
-  'guacamaya-roja': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Scarlet_macaw_%28Ara_macao_cyanopterus%29_Copan.jpg/330px-Scarlet_macaw_%28Ara_macao_cyanopterus%29_Copan.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
-  'caballito-mar': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Hippocampus_hippocampus_%28on_Ascophyllum_nodosum%29.jpg/330px-Hippocampus_hippocampus_%28on_Ascophyllum_nodosum%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
-  'lince-iberico': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Lince_ib%C3%A9rico_%28Lynx_pardinus%29%2C_Almuradiel%2C_Ciudad_Real%2C_Espa%C3%B1a%2C_2021-12-19%2C_DD_07.jpg/330px-Lince_ib%C3%A9rico_%28Lynx_pardinus%29%2C_Almuradiel%2C_Ciudad_Real%2C_Espa%C3%B1a%2C_2021-12-19%2C_DD_07.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
-  'gorila-occidental': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Male_gorilla_in_SF_zoo.jpg/330px-Male_gorilla_in_SF_zoo.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
-  'canguro-rojo': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Red_kangaroo_-_melbourne_zoo.jpg/330px-Red_kangaroo_-_melbourne_zoo.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
-  'orangutan-borneo': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Tanjung_Puting30477.jpg/330px-Tanjung_Puting30477.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
-}
-
-export const speciesCatalogImagePositions = {
-  jaguar: 'center 22%',
-  'tortuga-carey': 'center 24%',
-  'rana-cristal': 'center 38%',
-  'guacamaya-roja': 'center 32%',
-  'caballito-mar': 'center 44%',
-  'lince-iberico': 'center 36%',
-  'gorila-occidental': 'center 28%',
-  'canguro-rojo': 'center 34%',
-  'orangutan-borneo': 'center 30%',
+const speciesCatalogMedia = {
+  jaguar: {
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Standing_jaguar.jpg/330px-Standing_jaguar.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+    imagePosition: 'center 22%',
+  },
+  'tortuga-carey': {
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Eretmochelys-imbricata-K%C3%A9lonia-2.JPG/330px-Eretmochelys-imbricata-K%C3%A9lonia-2.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+    imagePosition: 'center 24%',
+  },
+  'rana-cristal': {
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Cochranella_susatamai03.jpg/330px-Cochranella_susatamai03.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+    imagePosition: 'center 38%',
+  },
+  'guacamaya-roja': {
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Scarlet_macaw_%28Ara_macao_cyanopterus%29_Copan.jpg/330px-Scarlet_macaw_%28Ara_macao_cyanopterus%29_Copan.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+    imagePosition: 'center 32%',
+  },
+  'caballito-mar': {
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Hippocampus_hippocampus_%28on_Ascophyllum_nodosum%29.jpg/330px-Hippocampus_hippocampus_%28on_Ascophyllum_nodosum%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+    imagePosition: 'center 44%',
+  },
+  'lince-iberico': {
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Lince_ib%C3%A9rico_%28Lynx_pardinus%29%2C_Almuradiel%2C_Ciudad_Real%2C_Espa%C3%B1a%2C_2021-12-19%2C_DD_07.jpg/330px-Lince_ib%C3%A9rico_%28Lynx_pardinus%29%2C_Almuradiel%2C_Ciudad_Real%2C_Espa%C3%B1a%2C_2021-12-19%2C_DD_07.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+    imagePosition: 'center 36%',
+  },
+  'gorila-occidental': {
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Male_gorilla_in_SF_zoo.jpg/330px-Male_gorilla_in_SF_zoo.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+    imagePosition: 'center 28%',
+  },
+  'canguro-rojo': {
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Red_kangaroo_-_melbourne_zoo.jpg/330px-Red_kangaroo_-_melbourne_zoo.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+    imagePosition: 'center 34%',
+  },
+  'orangutan-borneo': {
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Tanjung_Puting30477.jpg/330px-Tanjung_Puting30477.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail',
+    imagePosition: 'center 30%',
+  },
 }
 
 export const DEFAULT_LANGUAGE = 'es'
@@ -66,11 +81,13 @@ export function getHabitatLabel(habitatId, language = DEFAULT_LANGUAGE) {
   return labels[resolvedLanguage] ?? labels[DEFAULT_LANGUAGE]
 }
 
-export function getHabitatOptions(language = DEFAULT_LANGUAGE) {
-  return Object.keys(HABITAT_LABELS).map((id) => ({
-    id,
-    label: getHabitatLabel(id, language),
-  }))
+function getLocalizedValue(values, language = DEFAULT_LANGUAGE, fallbackValue = '') {
+  if (!values || typeof values !== 'object') {
+    return fallbackValue
+  }
+
+  const resolvedLanguage = getSupportedLanguage(language)
+  return values[resolvedLanguage] ?? values[DEFAULT_LANGUAGE] ?? fallbackValue
 }
 
 function createNavbarCopy(copy) {
@@ -90,6 +107,7 @@ function createNavbarCopy(copy) {
     menu: 'Menú',
     close: 'Cerrar',
     languageLabel: 'Idioma',
+    skipToContent: 'Saltar al contenido',
     ...copy,
   }
 }
@@ -268,6 +286,7 @@ export const SITE_COPY = {
       menu: 'Menu',
       close: 'Close',
       languageLabel: 'Language',
+      skipToContent: 'Skip to content',
     },
     footer: {
       projectSummary: 'Project summary',
@@ -385,6 +404,7 @@ export const SITE_COPY = {
       menu: 'Menu',
       close: 'Tancar',
       languageLabel: 'Idioma',
+      skipToContent: 'Salta al contingut',
     },
     footer: {
       projectSummary: 'Resum del projecte',
@@ -492,6 +512,7 @@ export const SITE_COPY = {
       menu: 'Menu',
       close: 'Pechar',
       languageLabel: 'Idioma',
+      skipToContent: 'Saltar ao contido',
     },
     footer: {
       projectSummary: 'Resumo do proxecto',
@@ -599,6 +620,7 @@ export const SITE_COPY = {
       menu: 'Menua',
       close: 'Itxi',
       languageLabel: 'Hizkuntza',
+      skipToContent: 'Joan edukira',
     },
     footer: {
       projectSummary: 'Proiektuaren laburpena',
@@ -688,8 +710,10 @@ export const SITE_COPY = {
       reserve: 'Réserver',
       openMenu: 'Ouvrir le menu',
       closeMenu: 'Fermer le menu',
+      menu: 'Menu',
       close: 'Fermer',
       languageLabel: 'Langue',
+      skipToContent: 'Aller au contenu',
     },
     footer: {
       projectSummary: 'Résumé du projet',
@@ -890,22 +914,18 @@ export const localizedCollections = {
 }
 
 export function getImpactMetrics(language = DEFAULT_LANGUAGE) {
-  return localizedCollections.impactMetrics[getSupportedLanguage(language)]
+  return getLocalizedValue(localizedCollections.impactMetrics, language, [])
 }
 
 export function getHabitatsOverview(language = DEFAULT_LANGUAGE) {
-  return localizedCollections.habitatsOverview[getSupportedLanguage(language)]
+  return getLocalizedValue(localizedCollections.habitatsOverview, language, [])
 }
 
 export function getVisitHighlights(language = DEFAULT_LANGUAGE) {
-  return localizedCollections.visitHighlights[getSupportedLanguage(language)]
+  return getLocalizedValue(localizedCollections.visitHighlights, language, [])
 }
 
-export const impactMetrics = localizedCollections.impactMetrics.es
-export const habitatsOverview = localizedCollections.habitatsOverview.es
-export const visitHighlights = localizedCollections.visitHighlights.es
-
-export const editorialVideos = {
+const editorialVideos = {
   marine: {
     videoUrl: 'https://cdn.pixabay.com/video/2022/03/15/110877-689510466_large.mp4',
     sourceUrl: 'https://pixabay.com/es/videos/medusa-submarino-oceano-agua-110877/',
@@ -920,26 +940,34 @@ export function getEditorialVideos() {
   return editorialVideos
 }
 
-export function getSpeciesCatalog(language = DEFAULT_LANGUAGE) {
-  const resolvedLanguage = getSupportedLanguage(language)
+function mapSpeciesCatalogSources(sources, language = DEFAULT_LANGUAGE) {
+  return sources.map((source) => {
+    const media = speciesCatalogMedia[source.id] ?? {}
 
-  return speciesCatalogSources.map((source) => ({
-    id: source.id,
-    name: source.name[resolvedLanguage] ?? source.name[DEFAULT_LANGUAGE],
-    habitatId: source.habitatId,
-    habitat: getHabitatLabel(source.habitatId, resolvedLanguage),
-    status: source.status[resolvedLanguage] ?? source.status[DEFAULT_LANGUAGE],
-    region: source.region[resolvedLanguage] ?? source.region[DEFAULT_LANGUAGE],
-    description:
-      source.fallbackDescription[resolvedLanguage] ??
-      source.fallbackDescription[DEFAULT_LANGUAGE] ??
-      '',
-    image: source.image ?? speciesCatalogSourceImages[source.id] ?? '',
-    imagePosition: source.imagePosition ?? speciesCatalogImagePositions[source.id] ?? 'center',
-    videoUrl: source.videoUrl ?? '',
-    videoEmbedUrl: source.videoEmbedUrl ?? '',
-    sourceUrl: source.sourceUrl ?? `https://en.wikipedia.org/wiki/${source.wikipediaTitle}`,
-  }))
+    return {
+      id: source.id,
+      name: getLocalizedValue(source.name, language),
+      habitatId: source.habitatId,
+      habitat: getHabitatLabel(source.habitatId, language),
+      status: getLocalizedValue(source.status, language),
+      region: getLocalizedValue(source.region, language),
+      description: getLocalizedValue(source.fallbackDescription, language),
+      image: source.image ?? media.image ?? '',
+      imagePosition: source.imagePosition ?? media.imagePosition ?? 'center',
+      videoUrl: source.videoUrl ?? '',
+      videoEmbedUrl: source.videoEmbedUrl ?? '',
+      videoSourceUrl: source.videoSourceUrl ?? '',
+      sourceUrl: source.sourceUrl ?? `https://en.wikipedia.org/wiki/${source.wikipediaTitle}`,
+    }
+  })
+}
+
+export function localizeSpeciesCatalogEntries(sources, language = DEFAULT_LANGUAGE) {
+  return mapSpeciesCatalogSources(sources, language)
+}
+
+export function getSpeciesCatalog(language = DEFAULT_LANGUAGE) {
+  return mapSpeciesCatalogSources(speciesCatalogSources, language)
 }
 
 export function getSpeciesById(speciesId, language = DEFAULT_LANGUAGE) {
@@ -947,13 +975,13 @@ export function getSpeciesById(speciesId, language = DEFAULT_LANGUAGE) {
 }
 
 export const speciesCatalogSources = [
-  { id: 'jaguar', wikipediaTitle: 'Jaguar', habitatId: 'rainforest', name: { en: 'Jaguar', es: 'Jaguar', ca: 'Jaguar', gl: 'Xaguar', eu: 'Jaguarra', fr: 'Jaguar' }, status: { en: 'Vulnerable', es: 'Vulnerable', ca: 'Vulnerable', gl: 'Vulnerable', eu: 'Kaltebera', fr: 'Vulnerable' }, region: { en: 'Amazon', es: 'Amazonía', ca: 'Amazònia', gl: 'Amazonia', eu: 'Amazonia', fr: 'Amazonie' }, fallbackDescription: { en: 'A key predator for explaining trophic balance and the conservation of continuous forest.', es: 'Depredador clave para explicar el equilibrio trófico y la conservación del bosque continuo.', ca: 'Depredador clau per explicar l equilibri tròfic i la conservació del bosc continu.', gl: 'Depredador clave para explicar o equilibrio trófico e a conservación do bosque continuo.', eu: 'Harrapari giltzarria kate trofikoa eta baso jarraituaren kontserbazioa azaltzeko.', fr: 'Prédateur clé pour expliquer l équilibre trophique et la conservation de la forêt continue.' } },
-  { id: 'tortuga-carey', wikipediaTitle: 'Hawksbill_sea_turtle', habitatId: 'reef-coast', name: { en: 'Hawksbill turtle', es: 'Tortuga carey', ca: 'Tortuga carei', gl: 'Tartaruga carei', eu: 'Carey dortoka', fr: 'Tortue imbriquée' }, status: { en: 'Critically endangered', es: 'En peligro crítico', ca: 'En perill crític', gl: 'En perigo crítico', eu: 'Galzorian', fr: 'En danger critique' }, region: { en: 'Caribbean', es: 'Caribe', ca: 'Carib', gl: 'Caribe', eu: 'Karibea', fr: 'Caraïbes' }, fallbackDescription: { en: 'An indicator of coastal health and reef fragility.', es: 'Indicadora de salud costera y de la fragilidad de los arrecifes coralinos.', ca: 'Indicadora de la salut costanera i de la fragilitat dels esculls coral·lins.', gl: 'Indicadora da saúde costeira e da fraxilidade dos arrecifes coralinos.', eu: 'Kostaldeko osasunaren eta koral arrezifeen hauskortasunaren adierazlea.', fr: 'Indicatrice de la santé côtière et de la fragilité des récifs coralliens.' } },
-  { id: 'rana-cristal', wikipediaTitle: 'Glass_frog', habitatId: 'rainforest', name: { en: 'Glass frog', es: 'Rana de cristal', ca: 'Granota de vidre', gl: 'Ra de cristal', eu: 'Beirazko igela', fr: 'Grenouille de verre' }, status: { en: 'Near threatened', es: 'Casi amenazada', ca: 'Quasi amenaçada', gl: 'Case ameazada', eu: 'Ia mehatxatua', fr: 'Quasi menacée' }, region: { en: 'Tropical Andes', es: 'Andes tropicales', ca: 'Andes tropicals', gl: 'Andes tropicais', eu: 'Ande tropikalak', fr: 'Andes tropicales' }, fallbackDescription: { en: 'Ideal for showing sensitivity to shifts in temperature and humidity.', es: 'Excelente especie para mostrar sensibilidad a cambios de temperatura y humedad.', ca: 'Excel·lent espècie per mostrar sensibilitat als canvis de temperatura i humitat.', gl: 'Excelente especie para mostrar sensibilidade aos cambios de temperatura e humidade.', eu: 'Tenperatura eta hezetasun aldaketekiko sentikortasuna erakusteko aproposa.', fr: 'Excellente espèce pour montrer la sensibilité aux variations de température et d humidité.' } },
-  { id: 'guacamaya-roja', wikipediaTitle: 'Scarlet_macaw', habitatId: 'temperate-forest', name: { en: 'Scarlet macaw', es: 'Guacamaya roja', ca: 'Guacamai roig', gl: 'Guacamayo vermello', eu: 'Ara gorria', fr: 'Ara écarlate' }, status: { en: 'Least concern', es: 'Preocupación menor', ca: 'Preocupació menor', gl: 'Preocupación menor', eu: 'Arrisku txikia', fr: 'Préoccupation mineure' }, region: { en: 'Mesoamerican corridor', es: 'Corredor mesoamericano', ca: 'Corredor mesoamericà', gl: 'Corredor mesoamericano', eu: 'Mesoamerikako korridorea', fr: 'Corridor mésoaméricain' }, fallbackDescription: { en: 'Useful for explaining mobility, enrichment and public education.', es: 'Ayuda a explicar movilidad, enriquecimiento ambiental y educación pública.', ca: 'Ajuda a explicar la mobilitat, l enriquiment ambiental i l educació pública.', gl: 'Axuda a explicar a mobilidade, o enriquecemento ambiental e a educación pública.', eu: 'Mugikortasuna, ingurune aberastea eta hezkuntza publikoa azaltzeko baliagarria.', fr: 'Aide à expliquer la mobilité, l enrichissement environnemental et l éducation du public.' } },
-  { id: 'caballito-mar', wikipediaTitle: 'Seahorse', habitatId: 'reef-coast', name: { en: 'Seahorse', es: 'Caballito de mar', ca: 'Cavallet de mar', gl: 'Cabaliño de mar', eu: 'Itsas zalditxoa', fr: 'Hippocampe' }, status: { en: 'Data deficient', es: 'Datos insuficientes', ca: 'Dades insuficients', gl: 'Datos insuficientes', eu: 'Datu eskasak', fr: 'Données insuffisantes' }, region: { en: 'Western Mediterranean', es: 'Mediterráneo occidental', ca: 'Mediterrani occidental', gl: 'Mediterráneo occidental', eu: 'Mendebaldeko Mediterraneoa', fr: 'Méditerranée occidentale' }, fallbackDescription: { en: 'A good way to discuss marine restoration and human pressure monitoring.', es: 'Permite hablar de restauración marina y monitoreo de presión humana.', ca: 'Permet parlar de restauració marina i seguiment de la pressió humana.', gl: 'Permite falar de restauración mariña e seguimento da presión humana.', eu: 'Itsas leheneratzea eta giza presioa kontrolatzea azaltzeko aukera ematen du.', fr: 'Permet de parler de restauration marine et du suivi de la pression humaine.' } },
-  { id: 'lince-iberico', wikipediaTitle: 'Iberian_lynx', habitatId: 'temperate-forest', name: { en: 'Iberian lynx', es: 'Lince ibérico', ca: 'Linx ibèric', gl: 'Lince ibérico', eu: 'Iberiar katamotza', fr: 'Lynx ibérique' }, status: { en: 'Vulnerable', es: 'Vulnerable', ca: 'Vulnerable', gl: 'Vulnerable', eu: 'Kaltebera', fr: 'Vulnérable' }, region: { en: 'Southwestern Europe', es: 'Suroeste de Europa', ca: 'Sud-oest d Europa', gl: 'Suroeste de Europa', eu: 'Europako hego-mendebaldea', fr: 'Sud-ouest de l Europe' }, fallbackDescription: { en: 'A strong case for sustained population recovery and coordinated management.', es: 'Caso útil para mostrar recuperación poblacional sostenida y gestión coordinada.', ca: 'Cas útil per mostrar una recuperació poblacional sostinguda i una gestió coordinada.', gl: 'Caso útil para mostrar recuperación poboacional sostida e xestión coordinada.', eu: 'Populazioaren berreskuratze iraunkorra eta kudeaketa koordinatua erakusteko adibide ona.', fr: 'Cas utile pour montrer le rétablissement durable d une population et une gestion coordonnée.' } },
-  { id: 'gorila-occidental', wikipediaTitle: 'Western_gorilla', habitatId: 'african-forest', name: { en: 'Western gorilla', es: 'Gorila occidental', ca: 'Goril la occidental', gl: 'Gorila occidental', eu: 'Mendebaldeko gorila', fr: 'Gorille occidental' }, status: { en: 'Critically endangered', es: 'En peligro critico', ca: 'En perill critic', gl: 'En perigo critico', eu: 'Galzorian', fr: 'En danger critique' }, region: { en: 'Central Africa', es: 'Africa central', ca: 'Africa central', gl: 'Africa central', eu: 'Afrika erdialdea', fr: 'Afrique centrale' }, fallbackDescription: { en: 'A key species for social behaviour, human pressure and African forest conservation.', es: 'Especie clave para trabajar comportamiento social, presion humana y conservacion de bosque africano.', ca: 'Especie clau per treballar comportament social, pressio humana i conservacio del bosc africa.', gl: 'Especie clave para traballar comportamento social, presion humana e conservacion do bosque africano.', eu: 'Funtsezko espeziea portaera soziala, giza presioa eta Afrikako basoaren kontserbazioa lantzeko.', fr: 'Espece cle pour travailler le comportement social, la pression humaine et la conservation de la foret africaine.' } },
-  { id: 'canguro-rojo', wikipediaTitle: 'Red_kangaroo', habitatId: 'australia', name: { en: 'Red kangaroo', es: 'Canguro rojo', ca: 'Cangur roig', gl: 'Canguro vermello', eu: 'Kanguru gorria', fr: 'Kangourou roux' }, status: { en: 'Least concern', es: 'Preocupacion menor', ca: 'Preocupacio menor', gl: 'Preocupacion menor', eu: 'Arrisku txikia', fr: 'Preoccupation mineure' }, region: { en: 'Australian interior', es: 'Interior australiano', ca: 'Interior australia', gl: 'Interior australiano', eu: 'Australiako barnealdea', fr: 'Interieur australien' }, fallbackDescription: { en: 'Helps explain locomotion, heat adaptation and Australian endemic fauna.', es: 'Permite hablar de locomocion, adaptacion al calor y fauna endemica australiana.', ca: 'Permet parlar de locomocio, adaptacio a la calor i fauna endemica australiana.', gl: 'Permite falar de locomocion, adaptacion a calor e fauna endemica australiana.', eu: 'Lokomozioa, beroarekiko egokitzapena eta Australiako fauna endemikoa azaltzeko balio du.', fr: 'Permet de parler de locomotion, d adaptation a la chaleur et de faune endemique australienne.' } },
-  { id: 'orangutan-borneo', wikipediaTitle: 'Bornean_orangutan', habitatId: 'rainforest', name: { en: 'Bornean orangutan', es: 'Orangutan de Borneo', ca: 'Orangutan de Borneo', gl: 'Orangutan de Borneo', eu: 'Borneoko orangutana', fr: 'Orang-outan de Borneo' }, status: { en: 'Critically endangered', es: 'En peligro critico', ca: 'En perill critic', gl: 'En perigo critico', eu: 'Galzorian', fr: 'En danger critique' }, region: { en: 'Southeast Asia', es: 'Sudeste asiatico', ca: 'Sud-est asiatic', gl: 'Sueste asiatico', eu: 'Hego-ekialdeko Asia', fr: 'Asie du Sud-Est' }, fallbackDescription: { en: 'Very useful for connecting vertical biodiversity, forest cover loss and active conservation.', es: 'Muy util para conectar biodiversidad vertical, perdida de cobertura forestal y conservacion activa.', ca: 'Molt util per connectar biodiversitat vertical, perdua de cobertura forestal i conservacio activa.', gl: 'Moi util para conectar biodiversidade vertical, perda de cobertura forestal e conservacion activa.', eu: 'Oso erabilgarria biodibertsitate bertikala, baso estalduraren galera eta kontserbazio aktiboa lotzeko.', fr: 'Tres utile pour relier biodiversite verticale, perte de couverture forestiere et conservation active.' } },
+  { id: 'jaguar', wikipediaTitle: 'Jaguar', habitatId: 'rainforest', name: { en: 'Jaguar', es: 'Jaguar', ca: 'Jaguar', gl: 'Xaguar', eu: 'Jaguarra', fr: 'Jaguar' }, status: { en: 'Vulnerable', es: 'Vulnerable', ca: 'Vulnerable', gl: 'Vulnerable', eu: 'Kaltebera', fr: 'Vulnerable' }, region: { en: 'Amazon', es: 'Amazonía', ca: 'Amazònia', gl: 'Amazonia', eu: 'Amazonia', fr: 'Amazonie' }, fallbackDescription: { en: 'A key predator for explaining trophic balance and the conservation of continuous forest.', es: 'Depredador clave para explicar el equilibrio trófico y la conservación del bosque continuo.', ca: 'Depredador clau per explicar l equilibri tròfic i la conservació del bosc continu.', gl: 'Depredador clave para explicar o equilibrio trófico e a conservación do bosque continuo.', eu: 'Harrapari giltzarria kate trofikoa eta baso jarraituaren kontserbazioa azaltzeko.', fr: 'Prédateur clé pour expliquer l équilibre trophique et la conservation de la forêt continue.' }, videoUrl: 'https://cdn.pixabay.com/video/2023/09/15/180698-864967757_large.mp4', videoSourceUrl: 'https://pixabay.com/videos/jaguar-strong-animal-wild-nature-180698/' },
+  { id: 'tortuga-carey', wikipediaTitle: 'Hawksbill_sea_turtle', habitatId: 'reef-coast', name: { en: 'Hawksbill turtle', es: 'Tortuga carey', ca: 'Tortuga carei', gl: 'Tartaruga carei', eu: 'Carey dortoka', fr: 'Tortue imbriquée' }, status: { en: 'Critically endangered', es: 'En peligro crítico', ca: 'En perill crític', gl: 'En perigo crítico', eu: 'Galzorian', fr: 'En danger critique' }, region: { en: 'Caribbean', es: 'Caribe', ca: 'Carib', gl: 'Caribe', eu: 'Karibea', fr: 'Caraïbes' }, fallbackDescription: { en: 'An indicator of coastal health and reef fragility.', es: 'Indicadora de salud costera y de la fragilidad de los arrecifes coralinos.', ca: 'Indicadora de la salut costanera i de la fragilitat dels esculls coral·lins.', gl: 'Indicadora da saúde costeira e da fraxilidade dos arrecifes coralinos.', eu: 'Kostaldeko osasunaren eta koral arrezifeen hauskortasunaren adierazlea.', fr: 'Indicatrice de la santé côtière et de la fragilité des récifs coralliens.' }, videoUrl: 'https://cdn.pixabay.com/video/2019/01/24/20906-313485343_large.mp4', videoSourceUrl: 'https://pixabay.com/videos/hawksbill-sea-turtle-underwater-20906/' },
+  { id: 'rana-cristal', wikipediaTitle: 'Glass_frog', habitatId: 'rainforest', name: { en: 'Glass frog', es: 'Rana de cristal', ca: 'Granota de vidre', gl: 'Ra de cristal', eu: 'Beirazko igela', fr: 'Grenouille de verre' }, status: { en: 'Near threatened', es: 'Casi amenazada', ca: 'Quasi amenaçada', gl: 'Case ameazada', eu: 'Ia mehatxatua', fr: 'Quasi menacée' }, region: { en: 'Tropical Andes', es: 'Andes tropicales', ca: 'Andes tropicals', gl: 'Andes tropicais', eu: 'Ande tropikalak', fr: 'Andes tropicales' }, fallbackDescription: { en: 'Ideal for showing sensitivity to shifts in temperature and humidity.', es: 'Excelente especie para mostrar sensibilidad a cambios de temperatura y humedad.', ca: 'Excel·lent espècie per mostrar sensibilitat als canvis de temperatura i humitat.', gl: 'Excelente especie para mostrar sensibilidade aos cambios de temperatura e humidade.', eu: 'Tenperatura eta hezetasun aldaketekiko sentikortasuna erakusteko aproposa.', fr: 'Excellente espèce pour montrer la sensibilité aux variations de température et d humidité.' }, videoUrl: 'https://cdn.pixabay.com/video/2025/11/05/314169_large.mp4', videoSourceUrl: 'https://pixabay.com/videos/glass-frog-frog-amphibian-314169/' },
+  { id: 'guacamaya-roja', wikipediaTitle: 'Scarlet_macaw', habitatId: 'temperate-forest', name: { en: 'Scarlet macaw', es: 'Guacamaya roja', ca: 'Guacamai roig', gl: 'Guacamayo vermello', eu: 'Ara gorria', fr: 'Ara écarlate' }, status: { en: 'Least concern', es: 'Preocupación menor', ca: 'Preocupació menor', gl: 'Preocupación menor', eu: 'Arrisku txikia', fr: 'Préoccupation mineure' }, region: { en: 'Mesoamerican corridor', es: 'Corredor mesoamericano', ca: 'Corredor mesoamericà', gl: 'Corredor mesoamericano', eu: 'Mesoamerikako korridorea', fr: 'Corridor mésoaméricain' }, fallbackDescription: { en: 'Useful for explaining mobility, enrichment and public education.', es: 'Ayuda a explicar movilidad, enriquecimiento ambiental y educación pública.', ca: 'Ajuda a explicar la mobilitat, l enriquiment ambiental i l educació pública.', gl: 'Axuda a explicar a mobilidade, o enriquecemento ambiental e a educación pública.', eu: 'Mugikortasuna, ingurune aberastea eta hezkuntza publikoa azaltzeko baliagarria.', fr: 'Aide à expliquer la mobilité, l enrichissement environnemental et l éducation du public.' }, videoUrl: 'https://cdn.pixabay.com/video/2022/05/12/116781-709887681_large.mp4', videoSourceUrl: 'https://pixabay.com/videos/macaw-parrot-birds-american-parrot-116781/' },
+  { id: 'caballito-mar', wikipediaTitle: 'Seahorse', habitatId: 'reef-coast', name: { en: 'Seahorse', es: 'Caballito de mar', ca: 'Cavallet de mar', gl: 'Cabaliño de mar', eu: 'Itsas zalditxoa', fr: 'Hippocampe' }, status: { en: 'Data deficient', es: 'Datos insuficientes', ca: 'Dades insuficients', gl: 'Datos insuficientes', eu: 'Datu eskasak', fr: 'Données insuffisantes' }, region: { en: 'Western Mediterranean', es: 'Mediterráneo occidental', ca: 'Mediterrani occidental', gl: 'Mediterráneo occidental', eu: 'Mendebaldeko Mediterraneoa', fr: 'Méditerranée occidentale' }, fallbackDescription: { en: 'A good way to discuss marine restoration and human pressure monitoring.', es: 'Permite hablar de restauración marina y monitoreo de presión humana.', ca: 'Permet parlar de restauració marina i seguiment de la pressió humana.', gl: 'Permite falar de restauración mariña e seguimento da presión humana.', eu: 'Itsas leheneratzea eta giza presioa kontrolatzea azaltzeko aukera ematen du.', fr: 'Permet de parler de restauration marine et du suivi de la pression humaine.' }, videoUrl: 'https://cdn.pixabay.com/video/2025/10/18/310639_large.mp4', videoSourceUrl: 'https://pixabay.com/videos/seahorse-underwater-ocean-310639/' },
+  { id: 'lince-iberico', wikipediaTitle: 'Iberian_lynx', habitatId: 'temperate-forest', name: { en: 'Iberian lynx', es: 'Lince ibérico', ca: 'Linx ibèric', gl: 'Lince ibérico', eu: 'Iberiar katamotza', fr: 'Lynx ibérique' }, status: { en: 'Vulnerable', es: 'Vulnerable', ca: 'Vulnerable', gl: 'Vulnerable', eu: 'Kaltebera', fr: 'Vulnérable' }, region: { en: 'Southwestern Europe', es: 'Suroeste de Europa', ca: 'Sud-oest d Europa', gl: 'Suroeste de Europa', eu: 'Europako hego-mendebaldea', fr: 'Sud-ouest de l Europe' }, fallbackDescription: { en: 'A strong case for sustained population recovery and coordinated management.', es: 'Caso útil para mostrar recuperación poblacional sostenida y gestión coordinada.', ca: 'Cas útil per mostrar una recuperació poblacional sostinguda i una gestió coordinada.', gl: 'Caso útil para mostrar recuperación poboacional sostida e xestión coordinada.', eu: 'Populazioaren berreskuratze iraunkorra eta kudeaketa koordinatua erakusteko adibide ona.', fr: 'Cas utile pour montrer le rétablissement durable d une population et une gestion coordonnée.' }, videoUrl: 'https://cdn.pixabay.com/video/2024/04/17/208295_large.mp4', videoSourceUrl: 'https://pixabay.com/videos/lynx-big-cat-predator-brush-ears-208295/' },
+  { id: 'gorila-occidental', wikipediaTitle: 'Western_gorilla', habitatId: 'african-forest', name: { en: 'Western gorilla', es: 'Gorila occidental', ca: 'Goril la occidental', gl: 'Gorila occidental', eu: 'Mendebaldeko gorila', fr: 'Gorille occidental' }, status: { en: 'Critically endangered', es: 'En peligro critico', ca: 'En perill critic', gl: 'En perigo critico', eu: 'Galzorian', fr: 'En danger critique' }, region: { en: 'Central Africa', es: 'Africa central', ca: 'Africa central', gl: 'Africa central', eu: 'Afrika erdialdea', fr: 'Afrique centrale' }, fallbackDescription: { en: 'A key species for social behaviour, human pressure and African forest conservation.', es: 'Especie clave para trabajar comportamiento social, presion humana y conservacion de bosque africano.', ca: 'Especie clau per treballar comportament social, pressio humana i conservacio del bosc africa.', gl: 'Especie clave para traballar comportamento social, presion humana e conservacion do bosque africano.', eu: 'Funtsezko espeziea portaera soziala, giza presioa eta Afrikako basoaren kontserbazioa lantzeko.', fr: 'Espece cle pour travailler le comportement social, la pression humaine et la conservation de la foret africaine.' }, videoUrl: 'https://cdn.pixabay.com/video/2022/03/31/112427-694704482_large.mp4', videoSourceUrl: 'https://pixabay.com/videos/gorilla-silverback-ape-wildlife-112427/' },
+  { id: 'canguro-rojo', wikipediaTitle: 'Red_kangaroo', habitatId: 'australia', name: { en: 'Red kangaroo', es: 'Canguro rojo', ca: 'Cangur roig', gl: 'Canguro vermello', eu: 'Kanguru gorria', fr: 'Kangourou roux' }, status: { en: 'Least concern', es: 'Preocupacion menor', ca: 'Preocupacio menor', gl: 'Preocupacion menor', eu: 'Arrisku txikia', fr: 'Preoccupation mineure' }, region: { en: 'Australian interior', es: 'Interior australiano', ca: 'Interior australia', gl: 'Interior australiano', eu: 'Australiako barnealdea', fr: 'Interieur australien' }, fallbackDescription: { en: 'Helps explain locomotion, heat adaptation and Australian endemic fauna.', es: 'Permite hablar de locomocion, adaptacion al calor y fauna endemica australiana.', ca: 'Permet parlar de locomocio, adaptacio a la calor i fauna endemica australiana.', gl: 'Permite falar de locomocion, adaptacion a calor e fauna endemica australiana.', eu: 'Lokomozioa, beroarekiko egokitzapena eta Australiako fauna endemikoa azaltzeko balio du.', fr: 'Permet de parler de locomotion, d adaptation a la chaleur et de faune endemique australienne.' }, videoUrl: 'https://cdn.pixabay.com/video/2024/06/06/215490_large.mp4', videoSourceUrl: 'https://pixabay.com/videos/kangaroo-mammal-animal-wildlife-215490/' },
+  { id: 'orangutan-borneo', wikipediaTitle: 'Bornean_orangutan', habitatId: 'rainforest', name: { en: 'Bornean orangutan', es: 'Orangutan de Borneo', ca: 'Orangutan de Borneo', gl: 'Orangutan de Borneo', eu: 'Borneoko orangutana', fr: 'Orang-outan de Borneo' }, status: { en: 'Critically endangered', es: 'En peligro critico', ca: 'En perill critic', gl: 'En perigo critico', eu: 'Galzorian', fr: 'En danger critique' }, region: { en: 'Southeast Asia', es: 'Sudeste asiatico', ca: 'Sud-est asiatic', gl: 'Sueste asiatico', eu: 'Hego-ekialdeko Asia', fr: 'Asie du Sud-Est' }, fallbackDescription: { en: 'Very useful for connecting vertical biodiversity, forest cover loss and active conservation.', es: 'Muy util para conectar biodiversidad vertical, perdida de cobertura forestal y conservacion activa.', ca: 'Molt util per connectar biodiversitat vertical, perdua de cobertura forestal i conservacio activa.', gl: 'Moi util para conectar biodiversidade vertical, perda de cobertura forestal e conservacion activa.', eu: 'Oso erabilgarria biodibertsitate bertikala, baso estalduraren galera eta contserbazio aktiboa lotzeko.', fr: 'Tres utile pour relier biodiversite verticale, perte de couverture forestiere et conservation active.' }, videoUrl: '', videoEmbedUrl: 'https://www.youtube.com/embed/rmOqLDdg97M', videoSourceUrl: 'https://www.youtube.com/watch?v=rmOqLDdg97M' },
 ]

@@ -1,12 +1,57 @@
-import { useContext } from 'react'
-import BioceniaContext from './biocenia-context.jsx'
+import { useContext, useMemo } from 'react'
+import {
+  BioceniaCopyContext,
+  BioceniaFavoritesContext,
+  BioceniaHabitatContext,
+  BioceniaLanguageContext,
+  BioceniaReservationContext,
+} from './biocenia-context.jsx'
 
-export function useBiocenia() {
-  const context = useContext(BioceniaContext)
+function useRequiredContext(context, hookName) {
+  const value = useContext(context)
 
-  if (!context) {
-    throw new Error('useBiocenia debe utilizarse dentro de BioceniaProvider')
+  if (!value) {
+    throw new Error(`${hookName} debe utilizarse dentro de BioceniaProvider`)
   }
 
-  return context
+  return value
+}
+
+export function useBioceniaCopy() {
+  return useRequiredContext(BioceniaCopyContext, 'useBioceniaCopy')
+}
+
+export function useBioceniaHabitat() {
+  return useRequiredContext(BioceniaHabitatContext, 'useBioceniaHabitat')
+}
+
+export function useBioceniaFavorites() {
+  return useRequiredContext(BioceniaFavoritesContext, 'useBioceniaFavorites')
+}
+
+export function useBioceniaReservation() {
+  return useRequiredContext(BioceniaReservationContext, 'useBioceniaReservation')
+}
+
+export function useBioceniaLanguage() {
+  return useRequiredContext(BioceniaLanguageContext, 'useBioceniaLanguage')
+}
+
+export function useBiocenia() {
+  const copy = useBioceniaCopy()
+  const habitat = useBioceniaHabitat()
+  const favorites = useBioceniaFavorites()
+  const reservation = useBioceniaReservation()
+  const language = useBioceniaLanguage()
+
+  return useMemo(
+    () => ({
+      copy,
+      ...habitat,
+      ...favorites,
+      ...reservation,
+      ...language,
+    }),
+    [copy, favorites, habitat, language, reservation],
+  )
 }

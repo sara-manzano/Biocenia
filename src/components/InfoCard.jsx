@@ -7,7 +7,7 @@ const InfoCard = memo(function InfoCard({ title, description, meta, tone = 'defa
     <article className={className}>
       {image ? (
         <div className="info-card-media">
-          <img src={image} alt={imageAlt ?? title} className="info-card-image" />
+          <img src={image} alt={imageAlt ?? title} className="info-card-image" loading="lazy" />
         </div>
       ) : null}
 

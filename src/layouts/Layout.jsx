@@ -1,10 +1,18 @@
 import { Leaf, Mail, MapPin } from 'lucide-react'
 import { Link, Outlet } from 'react-router-dom'
 import Navbar from '../components/Navbar'
-import { useBiocenia } from '../context/useBiocenia.jsx'
+import {
+  useBioceniaCopy,
+  useBioceniaFavorites,
+  useBioceniaHabitat,
+  useBioceniaReservation,
+} from '../context/useBiocenia.jsx'
 
 function Layout() {
-  const { copy, favorites, getHabitatLabel, reservation, selectedHabitat } = useBiocenia()
+  const copy = useBioceniaCopy()
+  const { favorites } = useBioceniaFavorites()
+  const { getHabitatLabel, selectedHabitat } = useBioceniaHabitat()
+  const { reservation } = useBioceniaReservation()
   const currentYear = new Date().getFullYear()
   const footerHabitat = selectedHabitat === 'all'
     ? copy.home.snapshot.generalTour
@@ -13,9 +21,13 @@ function Layout() {
 
   return (
     <div className="site-shell">
+      <a href="#main-content" className="skip-link">
+        {copy.navbar.skipToContent}
+      </a>
+
       <Navbar />
 
-      <main className="site-main">
+      <main id="main-content" className="site-main" tabIndex={-1}>
         <Outlet />
       </main>
 

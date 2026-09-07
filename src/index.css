@@ -156,6 +156,15 @@ button {
   cursor: pointer;
 }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(247, 195, 84, 0.92);
+  outline-offset: 3px;
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -537,7 +546,7 @@ p {
   max-width: 16ch;
   font-size: clamp(1.7rem, 3vw, 2.45rem);
   line-height: 0.94;
-  text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .home-hero-copy .hero-copy,
@@ -712,6 +721,15 @@ p {
   transform: translateY(-2px);
 }
 
+.primary-link:focus-visible,
+.secondary-link:focus-visible,
+.favorite-button:focus-visible,
+.chip-button:focus-visible,
+.source-link:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 4px rgba(247, 195, 84, 0.18);
+}
+
 .primary-link:hover {
   box-shadow: 0 18px 36px rgba(243, 139, 60, 0.28);
 }
@@ -823,7 +841,7 @@ p {
 }
 
 .detail-hub-link {
-  width: fit-content;
+  width: auto;
 }
 
 .detail-page-card {
@@ -1070,6 +1088,7 @@ p {
 .species-card-body {
   display: flex;
   flex-direction: column;
+  flex: 1;
   gap: 10px;
   transition: transform 220ms ease;
 }
@@ -1211,6 +1230,12 @@ p {
   gap: 16px;
   position: relative;
   overflow: visible;
+  height: 100%;
+}
+
+.species-card-head {
+  display: flex;
+  flex: 1;
 }
 
 .species-card.has-species-image {
@@ -1229,6 +1254,7 @@ p {
   background: rgba(255, 255, 255, 0.08);
   border: 4px solid rgba(8, 23, 20, 0.88);
   box-shadow: 0 18px 34px rgba(4, 14, 18, 0.24);
+  z-index: 0;
 }
 
 .species-image {
@@ -1236,15 +1262,15 @@ p {
   height: 100%;
   object-fit: cover;
   filter: saturate(0.92) contrast(1.02);
-  transition: transform 320ms ease, filter 320ms ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
-.species-card-head,
-.species-card-foot {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 14px;
+.species-inline-video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #081714;
 }
 
 .species-card-meta-row {
@@ -1262,11 +1288,27 @@ p {
   letter-spacing: -0.02em;
   text-align: left;
   align-self: flex-start;
-  text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .species-card-foot {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  gap: 14px 22px;
+  margin-top: auto;
+}
+
+.species-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.species-card-action {
+  min-height: 44px;
+  justify-content: center;
+  text-align: center;
 }
 
 .species-card-tags {
@@ -1274,6 +1316,7 @@ p {
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
+  margin-right: auto;
 }
 
 .species-status,
@@ -1295,30 +1338,71 @@ p {
 }
 
 .favorite-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.04);
-  color: var(--text);
+  color: #e35163;
   padding: 10px 14px;
   box-shadow: var(--shadow-soft);
   transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
 }
 
-.favorite-button.is-active {
-  background: rgba(247, 195, 84, 0.14);
-  color: #fff7d1;
+.favorite-button--icon {
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  padding: 0;
+  background: rgba(227, 81, 99, 0.12);
+  border-color: rgba(227, 81, 99, 0.28);
 }
 
-.favorite-button.is-active .badge-icon {
+.favorite-button--corner {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 2;
+}
+
+.favorite-button-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.favorite-button.is-active {
+  background: rgba(227, 81, 99, 0.2);
+  border-color: rgba(255, 117, 136, 0.36);
+  color: #ff6a7e;
+}
+
+.favorite-button.is-active .favorite-button-icon {
   animation: softPulse 2.8s ease-in-out infinite;
 }
 
 .source-link {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  color: #f59b47;
+  color: var(--text);
   text-decoration: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 .species-hero-shell,
@@ -1614,6 +1698,70 @@ p {
   gap: 24px;
 }
 
+.visit-visual-section {
+  gap: 0;
+}
+
+.visit-visual-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+  gap: 22px;
+}
+
+.visit-visual-card {
+  position: relative;
+  min-height: 320px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow);
+  background: rgba(8, 20, 19, 0.7);
+}
+
+.visit-visual-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(4, 12, 14, 0.1) 0%, rgba(4, 12, 14, 0.72) 72%, rgba(4, 12, 14, 0.9) 100%);
+}
+
+.visit-visual-card.is-featured {
+  min-height: 380px;
+}
+
+.visit-visual-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.visit-visual-copy {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px;
+}
+
+.visit-visual-copy h3 {
+  font-size: clamp(1.4rem, 2.8vw, 2.3rem);
+  line-height: 0.98;
+}
+
+.visit-visual-copy p,
+.visit-visual-copy span {
+  max-width: 42ch;
+}
+
+.visit-visual-copy span {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
 .visit-highlights-heading h2 {
   max-width: 100%;
 }
@@ -1674,6 +1822,7 @@ p {
   .page-hero,
   .home-overview-grid,
   .reservation-layout,
+  .visit-visual-grid,
   .species-summary-grid,
   .editorial-video-grid,
   .species-overview-video,
@@ -1845,7 +1994,9 @@ p {
   .editorial-video-shell,
   .species-overview-shell,
   .detail-media-shell,
-  .detail-image {
+  .detail-image,
+  .visit-visual-card,
+  .visit-visual-card.is-featured {
     min-height: 260px;
   }
 

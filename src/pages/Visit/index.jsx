@@ -1,8 +1,14 @@
 import { CalendarDays, Heart, Leaf, Sparkles } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useId, useMemo, useState } from 'react'
 import InfoCard from '../../components/InfoCard'
-import { useBiocenia } from '../../context/useBiocenia.jsx'
-import { getVisitHighlights } from '../../data/siteContent.jsx'
+import {
+  useBioceniaCopy,
+  useBioceniaFavorites,
+  useBioceniaHabitat,
+  useBioceniaLanguage,
+  useBioceniaReservation,
+} from '../../context/useBiocenia.jsx'
+import { getHabitatsOverview, getVisitHighlights } from '../../data/siteContent.jsx'
 
 const EMPTY_FORM = {
   name: '',
@@ -10,6 +16,11 @@ const EMPTY_FORM = {
   visitors: '2',
   date: '',
   notes: '',
+}
+
+function getLocalDateValue(date = new Date()) {
+  const timezoneOffset = date.getTimezoneOffset() * 60 * 1000
+  return new Date(date.getTime() - timezoneOffset).toISOString().split('T')[0]
 }
 
 function getInitialFormValues(reservation) {
@@ -37,10 +48,25 @@ function buildReservationReference(name) {
   return `BIO-${normalizedName || 'VIS'}-${suffix}`
 }
 
+function getVisitVisuals(habitats, activeHabitatId) {
+  if (!habitats.length) {
+    return []
+  }
+
+  const featuredHabitat = activeHabitatId && activeHabitatId !== 'all'
+    ? habitats.find((habitat) => habitat.id === activeHabitatId) ?? habitats[0]
+    : habitats[0]
+
+  const secondaryHabitat = habitats.find((habitat) => habitat.id !== featuredHabitat.id) ?? featuredHabitat
+
+  return [featuredHabitat, secondaryHabitat]
+}
+
 function ReservationForm({ copy, minVisitDate, onSave, reservation }) {
   const [formStatus, setFormStatus] = useState('idle')
   const [formMessage, setFormMessage] = useState('')
   const [formValues, setFormValues] = useState(() => getInitialFormValues(reservation))
+  const feedbackId = useId()
 
   function handleChange(event) {
     const { name, value } = event.target
@@ -120,6 +146,8 @@ function ReservationForm({ copy, minVisitDate, onSave, reservation }) {
           onChange={handleChange}
           placeholder={copy.visit.form.namePlaceholder}
           autoComplete="name"
+          aria-invalid={formStatus === 'error'}
+          aria-describedby={formStatus !== 'idle' ? feedbackId : undefined}
         />
       </label>
 
@@ -134,6 +162,8 @@ function ReservationForm({ copy, minVisitDate, onSave, reservation }) {
           onChange={handleChange}
           placeholder={copy.visit.form.emailPlaceholder}
           autoComplete="email"
+          aria-invalid={formStatus === 'error'}
+          aria-describedby={formStatus !== 'idle' ? feedbackId : undefined}
         />
       </label>
 
@@ -149,6 +179,8 @@ function ReservationForm({ copy, minVisitDate, onSave, reservation }) {
             max="25"
             value={formValues.visitors}
             onChange={handleChange}
+            aria-invalid={formStatus === 'error'}
+            aria-describedby={formStatus !== 'idle' ? feedbackId : undefined}
           />
         </label>
 
@@ -162,6 +194,8 @@ function ReservationForm({ copy, minVisitDate, onSave, reservation }) {
             min={minVisitDate}
             value={formValues.date}
             onChange={handleChange}
+            aria-invalid={formStatus === 'error'}
+            aria-describedby={formStatus !== 'idle' ? feedbackId : undefined}
           />
         </label>
       </div>
@@ -175,6 +209,8 @@ function ReservationForm({ copy, minVisitDate, onSave, reservation }) {
           value={formValues.notes}
           onChange={handleChange}
           placeholder={copy.visit.form.notesPlaceholder}
+          aria-invalid={formStatus === 'error'}
+          aria-describedby={formStatus !== 'idle' ? feedbackId : undefined}
         />
       </label>
 
@@ -183,7 +219,12 @@ function ReservationForm({ copy, minVisitDate, onSave, reservation }) {
       </button>
 
       {formStatus !== 'idle' ? (
-        <div className={formStatus === 'success' ? 'form-feedback is-success' : 'form-feedback is-error'}>
+        <div
+          id={feedbackId}
+          role={formStatus === 'success' ? 'status' : 'alert'}
+          aria-live="polite"
+          className={formStatus === 'success' ? 'form-feedback is-success' : 'form-feedback is-error'}
+        >
           {formMessage}
         </div>
       ) : null}
@@ -201,10 +242,19 @@ function SummaryItem({ label, value }) {
 }
 
 export default function VisitPage() {
-  const { copy, favorites, getHabitatLabel, language, reservation, saveReservation, selectedHabitat } = useBiocenia()
+  const copy = useBioceniaCopy()
+  const { favorites } = useBioceniaFavorites()
+  const { getHabitatLabel, selectedHabitat } = useBioceniaHabitat()
+  const { language } = useBioceniaLanguage()
+  const { reservation, saveReservation } = useBioceniaReservation()
   const highlights = getVisitHighlights(language)
-  const minVisitDate = useMemo(() => new Date().toISOString().split('T')[0], [])
+  const habitats = getHabitatsOverview(language)
+  const minVisitDate = useMemo(() => getLocalDateValue(), [])
   const reservationHabitatLabel = getHabitatLabel(reservation?.habitatId ?? selectedHabitat)
+  const visitVisuals = useMemo(
+    () => getVisitVisuals(habitats, reservation?.habitatId ?? selectedHabitat),
+    [habitats, reservation?.habitatId, selectedHabitat],
+  )
   const reservationTimestamp = reservation?.createdAt
     ? new Intl.DateTimeFormat(language, {
         dateStyle: 'medium',
@@ -321,6 +371,32 @@ export default function VisitPage() {
           <p className="inline-note">{copy.visit.aside.note}</p>
         </aside>
       </section>
+
+      {visitVisuals.length ? (
+        <section className="content-section visit-visual-section" aria-label={copy.visit.aside.title}>
+          <div className="visit-visual-grid">
+            {visitVisuals.map((visual, index) => (
+              <article
+                key={`${visual.id}-${index}`}
+                className={`visit-visual-card${index === 0 ? ' is-featured' : ''}`}
+              >
+                <img
+                  className="visit-visual-image"
+                  src={visual.image}
+                  alt={visual.imageAlt}
+                  loading="lazy"
+                />
+                <div className="visit-visual-copy">
+                  <p className="eyebrow">{index === 0 ? reservationHabitatLabel : visual.title}</p>
+                  <h3>{visual.title}</h3>
+                  <p>{visual.description}</p>
+                  <span>{visual.meta}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="content-section visit-highlights-section">
         <div className="section-heading visit-highlights-heading">

@@ -1,11 +1,40 @@
 import { Link, useParams } from 'react-router-dom'
-import { useBiocenia } from '../../context/useBiocenia.jsx'
+import { useBioceniaCopy, useBioceniaLanguage } from '../../context/useBiocenia.jsx'
 import { getSpeciesById } from '../../data/siteContent.jsx'
+import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion.jsx'
+
+function withPlaybackParams(url, autoPlayEnabled) {
+  if (!url) {
+    return url
+  }
+
+  try {
+    const resolvedUrl = new URL(url)
+    resolvedUrl.searchParams.set('controls', autoPlayEnabled ? '0' : '1')
+
+    if (autoPlayEnabled) {
+      resolvedUrl.searchParams.set('autoplay', '1')
+      resolvedUrl.searchParams.set('mute', '1')
+      resolvedUrl.searchParams.set('playsinline', '1')
+    } else {
+      resolvedUrl.searchParams.delete('autoplay')
+      resolvedUrl.searchParams.delete('mute')
+      resolvedUrl.searchParams.delete('playsinline')
+    }
+
+    return resolvedUrl.toString()
+  } catch {
+    return url
+  }
+}
 
 export default function SpeciesDetailPage() {
   const { speciesId } = useParams()
-  const { copy, language } = useBiocenia()
+  const copy = useBioceniaCopy()
+  const { language } = useBioceniaLanguage()
+  const prefersReducedMotion = usePrefersReducedMotion()
   const species = getSpeciesById(speciesId, language)
+  const sourceHref = species?.videoSourceUrl || species?.sourceUrl || ''
 
   if (!species) {
     return (
@@ -43,7 +72,7 @@ export default function SpeciesDetailPage() {
             <div className="detail-media-shell">
               {species.videoEmbedUrl ? (
                 <iframe
-                  src={species.videoEmbedUrl}
+                  src={withPlaybackParams(species.videoEmbedUrl, !prefersReducedMotion)}
                   title={species.name}
                   className="detail-video-frame"
                   loading="lazy"
@@ -55,9 +84,14 @@ export default function SpeciesDetailPage() {
                 <video
                   className="detail-video-frame"
                   src={species.videoUrl}
-                  controls
-                  preload="metadata"
+                  poster={species.image || undefined}
+                  aria-label={species.name}
+                  autoPlay={!prefersReducedMotion}
+                  controls={prefersReducedMotion}
+                  loop
+                  muted
                   playsInline
+                  preload="auto"
                 />
               ) : species.image ? (
                 <img
@@ -92,7 +126,7 @@ export default function SpeciesDetailPage() {
                 </div>
               ) : null}
 
-              <a href={species.sourceUrl} target="_blank" rel="noreferrer" className="source-link">
+              <a href={sourceHref} target="_blank" rel="noreferrer" className="source-link">
                 {copy.species.detail.sourceLabel}
               </a>
             </div>
