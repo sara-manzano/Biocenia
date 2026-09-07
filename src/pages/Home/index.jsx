@@ -1,4 +1,5 @@
 import { Heart, Leaf } from 'lucide-react'
+import EditorialVideo from '../../components/EditorialVideo'
 import InfoCard from '../../components/InfoCard'
 import PageHero from '../../components/PageHero'
 import heroImage from '../../assets/logo.webp'
@@ -21,11 +22,14 @@ export default function Home() {
   const habitatCards = getHabitatsOverview(language)
   const { marine } = getEditorialVideos()
   const prefersReducedMotion = usePrefersReducedMotion()
+  const activeHabitatLabel = selectedHabitat === 'all'
+    ? copy.home.snapshot.generalTour
+    : getHabitatLabel(selectedHabitat)
 
   const visitSnapshot = [
     {
       label: copy.home.snapshot.activeHabitat,
-      value: selectedHabitat === 'all' ? copy.home.snapshot.generalTour : getHabitatLabel(selectedHabitat),
+      value: activeHabitatLabel,
     },
     {
       label: copy.home.snapshot.savedSpecies,
@@ -65,7 +69,7 @@ export default function Home() {
             <div className="hero-orbit-row" aria-label={copy.home.hero.summaryTitle}>
               <div className="hero-orbit-chip">
                 <Leaf aria-hidden="true" />
-                <span>{selectedHabitat === 'all' ? copy.home.snapshot.generalTour : getHabitatLabel(selectedHabitat)}</span>
+                <span>{activeHabitatLabel}</span>
               </div>
               <div className="hero-orbit-chip">
                 <Heart aria-hidden="true" />
@@ -77,30 +81,18 @@ export default function Home() {
       />
 
       <section className="content-section editorial-video-section">
-        <div className="editorial-video-grid">
-          <div className="editorial-video-copy">
-            <p className="eyebrow">{copy.home.editorialVideo.eyebrow}</p>
-            <h2>{copy.home.editorialVideo.title}</h2>
-            <p>{copy.home.editorialVideo.description}</p>
-            <a href={marine.sourceUrl} target="_blank" rel="noreferrer" className="source-link">
-              {copy.home.editorialVideo.sourceLabel}
-            </a>
-          </div>
-
-          <div className="editorial-video-shell">
-            <video
-              className="editorial-video-player"
-              src={marine.videoUrl}
-              aria-label={copy.home.editorialVideo.title}
-              autoPlay={!prefersReducedMotion}
-              controls={prefersReducedMotion}
-              loop
-              muted
-              playsInline
-              preload="auto"
-            />
-          </div>
-        </div>
+        <EditorialVideo
+          sectionClassName="editorial-video-grid"
+          copyClassName="editorial-video-copy"
+          mediaClassName="editorial-video-shell"
+          eyebrow={copy.home.editorialVideo.eyebrow}
+          title={copy.home.editorialVideo.title}
+          description={copy.home.editorialVideo.description}
+          sourceLabel={copy.home.editorialVideo.sourceLabel}
+          sourceUrl={marine.sourceUrl}
+          videoUrl={marine.videoUrl}
+          prefersReducedMotion={prefersReducedMotion}
+        />
       </section>
 
       <section className="content-section home-habitats-section">

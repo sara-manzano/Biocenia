@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react'
+import { useContext } from 'react'
 import {
   BioceniaCopyContext,
   BioceniaFavoritesContext,
@@ -35,23 +35,4 @@ export function useBioceniaReservation() {
 
 export function useBioceniaLanguage() {
   return useRequiredContext(BioceniaLanguageContext, 'useBioceniaLanguage')
-}
-
-export function useBiocenia() {
-  const copy = useBioceniaCopy()
-  const habitat = useBioceniaHabitat()
-  const favorites = useBioceniaFavorites()
-  const reservation = useBioceniaReservation()
-  const language = useBioceniaLanguage()
-
-  return useMemo(
-    () => ({
-      copy,
-      ...habitat,
-      ...favorites,
-      ...reservation,
-      ...language,
-    }),
-    [copy, favorites, habitat, language, reservation],
-  )
 }

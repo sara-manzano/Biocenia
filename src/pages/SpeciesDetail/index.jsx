@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom'
 import { useBioceniaCopy, useBioceniaLanguage } from '../../context/useBiocenia.jsx'
-import { getSpeciesById } from '../../data/siteContent.jsx'
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion.jsx'
+import { useSpeciesCatalogData } from '../../hooks/useSpeciesCatalog.jsx'
 
 function withPlaybackParams(url, autoPlayEnabled) {
   if (!url) {
@@ -33,8 +33,19 @@ export default function SpeciesDetailPage() {
   const copy = useBioceniaCopy()
   const { language } = useBioceniaLanguage()
   const prefersReducedMotion = usePrefersReducedMotion()
-  const species = getSpeciesById(speciesId, language)
+  const { species: catalogSpecies, isLoading } = useSpeciesCatalogData(language)
+  const species = catalogSpecies.find((item) => item.id === speciesId) ?? null
   const sourceHref = species?.videoSourceUrl || species?.sourceUrl || ''
+
+  if (isLoading && !species) {
+    return (
+      <div className="page-stack">
+        <section className="content-section detail-page-section">
+          <div className="inline-note" role="status">{copy.species.loading}</div>
+        </section>
+      </div>
+    )
+  }
 
   if (!species) {
     return (

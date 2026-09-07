@@ -1,5 +1,6 @@
 import { Compass, Search, Sparkles } from 'lucide-react'
 import { useDeferredValue, useMemo, useState } from 'react'
+import EditorialVideo from '../../components/EditorialVideo'
 import InfoCard from '../../components/InfoCard'
 import SpeciesCard from '../../components/SpeciesCard'
 import {
@@ -84,30 +85,19 @@ export default function SpeciesPage() {
             </div>
           </div>
 
-          <div className="species-overview-video">
-            <div className="species-overview-copy">
-              <p className="eyebrow">{copy.species.overviewVideo.eyebrow}</p>
-              <h3>{copy.species.overviewVideo.title}</h3>
-              <p>{copy.species.overviewVideo.description}</p>
-              <a href={wildlife.sourceUrl} target="_blank" rel="noreferrer" className="source-link">
-                {copy.species.overviewVideo.sourceLabel}
-              </a>
-            </div>
-
-            <div className="species-overview-shell">
-              <video
-                className="editorial-video-player"
-                src={wildlife.videoUrl}
-                aria-label={copy.species.overviewVideo.title}
-                autoPlay={!prefersReducedMotion}
-                controls={prefersReducedMotion}
-                loop
-                muted
-                playsInline
-                preload="auto"
-              />
-            </div>
-          </div>
+          <EditorialVideo
+            sectionClassName="species-overview-video"
+            copyClassName="species-overview-copy"
+            mediaClassName="species-overview-shell"
+            eyebrow={copy.species.overviewVideo.eyebrow}
+            title={copy.species.overviewVideo.title}
+            titleTag="h3"
+            description={copy.species.overviewVideo.description}
+            sourceLabel={copy.species.overviewVideo.sourceLabel}
+            sourceUrl={wildlife.sourceUrl}
+            videoUrl={wildlife.videoUrl}
+            prefersReducedMotion={prefersReducedMotion}
+          />
         </div>
       </section>
 

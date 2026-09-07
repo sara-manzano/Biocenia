@@ -797,38 +797,6 @@ export function getSiteCopy(language = DEFAULT_LANGUAGE) {
 }
 
 export const localizedCollections = {
-  impactMetrics: {
-    es: [
-      { title: 'Seguimientos activos', value: '12 rutas en observacion', detail: 'No todas se abren al mismo tiempo: el tablero prioriza lo que cambia la visita de verdad.' },
-      { title: 'Tiempo medio de recorrido', value: '95 minutos', detail: 'Lo bastante largo para detenerse, lo bastante corto para no agotar el recorrido.' },
-      { title: 'Frentes de conservacion', value: '8 programas enlazados', detail: 'Rescate, reproduccion y mediacion publica conviven sin convertirse en relleno institucional.' },
-    ],
-    en: [
-      { title: 'Active monitoring', value: '12 routes under observation', detail: 'They do not all open at once: the dashboard prioritizes what really changes the visit.' },
-      { title: 'Average route time', value: '95 minutes', detail: 'Long enough to pause, short enough to avoid exhausting the route.' },
-      { title: 'Conservation fronts', value: '8 linked programs', detail: 'Rescue, breeding and public mediation coexist without turning into institutional filler.' },
-    ],
-    ca: [
-      { title: 'Seguiments actius', value: '12 rutes en observacio', detail: 'No s obren totes alhora: el tauler prioritza allo que canvia de veritat la visita.' },
-      { title: 'Temps mitja de recorregut', value: '95 minuts', detail: 'Prou llarg per aturar-se i prou curt per no esgotar el recorregut.' },
-      { title: 'Fronts de conservacio', value: '8 programes enllacats', detail: 'Rescat, reproduccio i mediacio publica conviuen sense convertir-se en farciment institucional.' },
-    ],
-    gl: [
-      { title: 'Seguimentos activos', value: '12 rutas en observacion', detail: 'Non todas se abren ao mesmo tempo: o panel prioriza o que cambia de verdade a visita.' },
-      { title: 'Tempo medio do percorrido', value: '95 minutos', detail: 'Abondo longo para deterse e abondo curto para non esgotar o percorrido.' },
-      { title: 'Frontes de conservacion', value: '8 programas ligados', detail: 'Rescate, reproducion e mediacion publica conviven sen converterse en recheo institucional.' },
-    ],
-    eu: [
-      { title: 'Jarraipen aktiboak', value: '12 ibilbide behaketan', detail: 'Ez dira guztiak aldi berean irekitzen: panelak benetan bisita aldatzen duena lehenesten du.' },
-      { title: 'Ibilbidearen batez besteko denbora', value: '95 minutu', detail: 'Gelditzeko adina luzea eta ibilbidea ez nekatzeko adina laburra.' },
-      { title: 'Kontserbazio ardatzak', value: '8 programa lotuta', detail: 'Erreskatea, ugalketa eta bitartekaritza publikoa batera doaz, betelanik bihurtu gabe.' },
-    ],
-    fr: [
-      { title: 'Suivis actifs', value: '12 parcours observes', detail: 'Ils ne s ouvrent pas tous en meme temps : le tableau priorise ce qui change vraiment la visite.' },
-      { title: 'Duree moyenne du parcours', value: '95 minutes', detail: 'Assez long pour s arreter, assez court pour ne pas epuiser la visite.' },
-      { title: 'Axes de conservation', value: '8 programmes relies', detail: 'Sauvetage, reproduction et mediation publique coexistent sans devenir du remplissage institutionnel.' },
-    ],
-  },
   habitatsOverview: {
     es: [
       { id: 'savanna', title: 'Sabana', image: sabanaImage, imageAlt: 'Paisaje de sabana con vegetacion abierta y clima seco.', description: 'Un paisaje abierto y soleado, con especies adaptadas a la sequia y la exposicion.', meta: 'La zona muestra como la desertificacion y la presion humana afectan a la biodiversidad.' },
@@ -911,10 +879,6 @@ export const localizedCollections = {
       { title: 'Contact opérationnel', description: 'visitas@biocenia.eco et +34 915 010 203.', meta: 'Pour confirmer les réservations et affiner les besoins.' },
     ],
   },
-}
-
-export function getImpactMetrics(language = DEFAULT_LANGUAGE) {
-  return getLocalizedValue(localizedCollections.impactMetrics, language, [])
 }
 
 export function getHabitatsOverview(language = DEFAULT_LANGUAGE) {

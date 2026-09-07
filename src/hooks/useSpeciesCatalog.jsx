@@ -8,7 +8,7 @@ import {
 
 const SPECIES_CATALOG_ENDPOINT = '/api/species-catalog.json'
 
-export function useSpeciesCatalog(selectedHabitat, query, language) {
+export function useSpeciesCatalogData(language) {
   const resolvedLanguage = getSupportedLanguage(language)
   const [catalogEntries, setCatalogEntries] = useState(null)
   const [hasFetchError, setHasFetchError] = useState(false)
@@ -63,6 +63,17 @@ export function useSpeciesCatalog(selectedHabitat, query, language) {
     [catalogEntries, resolvedLanguage],
   )
 
+  return {
+    species,
+    isLoading: catalogEntries === null && !hasFetchError,
+    error: hasFetchError ? 'catalog-fetch-failed' : '',
+  }
+}
+
+export function useSpeciesCatalog(selectedHabitat, query, language) {
+  const resolvedLanguage = getSupportedLanguage(language)
+  const { species, isLoading, error } = useSpeciesCatalogData(language)
+
   const normalizedQuery = useMemo(() => query.trim().toLowerCase(), [query])
 
   const habitats = useMemo(
@@ -95,7 +106,7 @@ export function useSpeciesCatalog(selectedHabitat, query, language) {
     species: filteredSpecies,
     habitats,
     totalSpecies: species.length,
-    isLoading: catalogEntries === null && !hasFetchError,
-    error: hasFetchError ? 'catalog-fetch-failed' : '',
+    isLoading,
+    error,
   }
 }
