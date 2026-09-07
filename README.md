@@ -4,21 +4,11 @@ Biocenia es una aplicación hecha con React y Vite para explorar hábitats, cons
 
 También intenté que por dentro fuese fácil de seguir. Por eso está dividido por páginas, componentes, hooks, contexto y datos, para que cada parte tenga una función clara y no quede todo mezclado.
 
-## Qué incluye
-
 La aplicación tiene una página de inicio con un resumen general, un catálogo de especies con búsqueda, filtro por hábitat y favoritos, una vista de detalle por especie y una página de visita con formulario de reserva y panel de resumen. Todo está planteado para funcionar bien en escritorio, tablet y móvil, y además incluye soporte multidioma.
 
-## Tecnologías usadas
-
-Está construida con React y Vite, usando react-router-dom para la navegación, Context API para el estado global, custom hooks para aislar lógica reutilizable y CSS vanilla para los estilos.
-
-## Requisitos que cubre
-
-El proyecto está planteado para cumplir con una práctica centrada en React. Incluye varias páginas accesibles con react-router-dom, uso de estados locales y globales con sentido, una carga de datos con useEffect, consumo de una API propia en `/api/species-catalog.json`, un formulario funcional, componentes reutilizables, custom hooks, useContext y una estructura bastante clara por páginas, componentes, contexto, hooks y datos.
+A nivel técnico está construida con React y Vite, usando react-router-dom para la navegación, Context API para el estado global, custom hooks para separar lógica reutilizable y CSS para los estilos. También está pensada para cumplir los requisitos habituales de una práctica de React: varias páginas, estados con sentido, uso de useEffect, consumo de una API propia, formulario funcional y componentes reutilizables.
 
 ## Cómo arrancarlo
-
-Para ponerlo en marcha en local:
 
 Primero instala las dependencias:
 
