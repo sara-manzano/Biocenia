@@ -63,8 +63,25 @@ npm run lint
 - React Router DOM 7
 - Context API para estado global
 - hooks personalizados para lógica reutilizable
+- `memo`, `useMemo` y `useDeferredValue` para reducir trabajo innecesario en render
 - CSS global en `src/index.css` con estilos específicos adicionales para la navegación
 - Lucide React para iconografía
+
+## Cumplimiento de requisitos
+
+El proyecto cubre los requisitos principales de la entrega:
+
+- web responsive con ajustes específicos para escritorio, tablet y móvil
+- arquitectura separada por páginas, componentes, contexto, hooks y datos
+- al menos 3 rutas funcionales con `react-router-dom`: inicio, especies y visita
+- varios estados con uso real: búsqueda, favoritos, idioma, hábitat activo, reserva y estado del formulario
+- uso de `useEffect` para cargar datos del catálogo desde un endpoint local
+- consumo de API propia mediante `fetch` a `public/api/species-catalog.json`
+- formulario útil de reserva con validación y persistencia local
+- componentes reutilizables como `PageHero`, `InfoCard`, `EditorialVideo` y `SpeciesCard`
+- custom hooks como `useSpeciesCatalog` y `usePrefersReducedMotion`
+- uso de `useContext` encapsulado en hooks específicos de `src/context/useBiocenia.jsx`
+- medidas para evitar renders innecesarios: contextos segmentados, valores memoizados, `memo` en componentes de presentación y `useDeferredValue` en la búsqueda
 
 ## Funcionalidades principales
 
@@ -103,7 +120,7 @@ La página de visita incorpora un formulario con validaciones para:
 - fecha sugerida
 - intención o notas del recorrido
 
-Al guardar, la app genera una referencia de reserva y actualiza un panel lateral con el resumen de la visita.
+Al guardar, la app genera una referencia de reserva y actualiza un panel lateral con el resumen de la visita. La sección también incluye un mapa visual del parque para ubicar zonas temáticas y servicios.
 
 ### 5. Persistencia local
 
@@ -265,5 +282,9 @@ Este proyecto sirve bien como práctica de frontend porque reúne en una sola ap
 - persistencia en navegador
 - internacionalización
 - composición de componentes reutilizables
+
+## Autoría
+
+Proyecto Biocenia desarrollado como aplicación frontend con enfoque divulgativo y de planificación de visitas.
 
 

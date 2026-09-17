@@ -1,6 +1,7 @@
+import { memo } from 'react'
 import { Link } from 'react-router-dom'
 
-function ActionLink({ action }) {
+const ActionLink = memo(function ActionLink({ action }) {
   const className = action.variant === 'secondary' ? 'secondary-link' : 'primary-link'
 
   return (
@@ -8,9 +9,9 @@ function ActionLink({ action }) {
       {action.label}
     </Link>
   )
-}
+})
 
-export default function PageHero({
+const PageHero = memo(function PageHero({
   eyebrow,
   title,
   description,
@@ -40,4 +41,6 @@ export default function PageHero({
       {aside}
     </section>
   )
-}
+})
+
+export default PageHero

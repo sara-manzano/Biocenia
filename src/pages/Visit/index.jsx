@@ -1,5 +1,6 @@
 import { CalendarDays, Heart, Leaf, Sparkles } from 'lucide-react'
-import { useId, useMemo, useState } from 'react'
+import { useId, useState } from 'react'
+import parkMapImage from '../../assets/mapa.webp'
 import InfoCard from '../../components/InfoCard'
 import {
   useBioceniaCopy,
@@ -8,7 +9,7 @@ import {
   useBioceniaLanguage,
   useBioceniaReservation,
 } from '../../context/useBiocenia.jsx'
-import { getHabitatsOverview, getVisitHighlights } from '../../data/siteContent.jsx'
+import { getVisitHighlights } from '../../data/siteContent.jsx'
 
 const EMPTY_FORM = {
   name: '',
@@ -46,20 +47,6 @@ function buildReservationReference(name) {
 
   const suffix = Math.random().toString(36).slice(2, 6).toUpperCase()
   return `BIO-${normalizedName || 'VIS'}-${suffix}`
-}
-
-function getVisitVisuals(habitats, activeHabitatId) {
-  if (!habitats.length) {
-    return []
-  }
-
-  const featuredHabitat = activeHabitatId && activeHabitatId !== 'all'
-    ? habitats.find((habitat) => habitat.id === activeHabitatId) ?? habitats[0]
-    : habitats[0]
-
-  const secondaryHabitat = habitats.find((habitat) => habitat.id !== featuredHabitat.id) ?? featuredHabitat
-
-  return [featuredHabitat, secondaryHabitat]
 }
 
 function ReservationForm({ copy, minVisitDate, onSave, reservation }) {
@@ -248,13 +235,8 @@ export default function VisitPage() {
   const { language } = useBioceniaLanguage()
   const { reservation, saveReservation } = useBioceniaReservation()
   const highlights = getVisitHighlights(language)
-  const habitats = getHabitatsOverview(language)
-  const minVisitDate = useMemo(() => getLocalDateValue(), [])
+  const minVisitDate = getLocalDateValue()
   const reservationHabitatLabel = getHabitatLabel(reservation?.habitatId ?? selectedHabitat)
-  const visitVisuals = useMemo(
-    () => getVisitVisuals(habitats, reservation?.habitatId ?? selectedHabitat),
-    [habitats, reservation?.habitatId, selectedHabitat],
-  )
   const reservationTimestamp = reservation?.createdAt
     ? new Intl.DateTimeFormat(language, {
         dateStyle: 'medium',
@@ -372,31 +354,25 @@ export default function VisitPage() {
         </aside>
       </section>
 
-      {visitVisuals.length ? (
-        <section className="content-section visit-visual-section" aria-label={copy.visit.aside.title}>
-          <div className="visit-visual-grid">
-            {visitVisuals.map((visual, index) => (
-              <article
-                key={`${visual.id}-${index}`}
-                className={`visit-visual-card${index === 0 ? ' is-featured' : ''}`}
-              >
-                <img
-                  className="visit-visual-image"
-                  src={visual.image}
-                  alt={visual.imageAlt}
-                  loading="lazy"
-                />
-                <div className="visit-visual-copy">
-                  <p className="eyebrow">{index === 0 ? reservationHabitatLabel : visual.title}</p>
-                  <h3>{visual.title}</h3>
-                  <p>{visual.description}</p>
-                  <span>{visual.meta}</span>
-                </div>
-              </article>
-            ))}
+      <section className="content-section visit-map-section" aria-label={copy.footer.locationLabel}>
+        <div className="visit-map-grid">
+          <div className="visit-map-card">
+            <img
+              className="visit-map-image"
+              src={parkMapImage}
+              alt={`Mapa general de ${copy.footer.location}`}
+              loading="lazy"
+            />
           </div>
-        </section>
-      ) : null}
+
+          <aside className="visit-map-aside">
+            <p className="eyebrow">{copy.footer.locationLabel}</p>
+            <h3>{copy.footer.location}</h3>
+            <p>{copy.footer.contact}</p>
+            <p className="inline-note">Mapa general del parque, zonas temáticas y servicios.</p>
+          </aside>
+        </div>
+      </section>
 
       <section className="content-section visit-highlights-section">
         <div className="section-heading visit-highlights-heading">

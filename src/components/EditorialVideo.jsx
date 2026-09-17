@@ -1,4 +1,6 @@
-export default function EditorialVideo({
+import { memo } from 'react'
+
+const EditorialVideo = memo(function EditorialVideo({
   sectionClassName,
   copyClassName,
   mediaClassName,
@@ -39,4 +41,6 @@ export default function EditorialVideo({
       </div>
     </div>
   )
-}
+})
+
+export default EditorialVideo
