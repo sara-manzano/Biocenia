@@ -1,5 +1,6 @@
+import { useEffect } from 'react'
 import { Leaf, Mail, MapPin } from 'lucide-react'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import {
   useBioceniaCopy,
@@ -9,6 +10,7 @@ import {
 } from '../context/useBiocenia.jsx'
 
 function Layout() {
+  const { pathname } = useLocation()
   const copy = useBioceniaCopy()
   const { favorites } = useBioceniaFavorites()
   const { getHabitatLabel, selectedHabitat } = useBioceniaHabitat()
@@ -18,6 +20,14 @@ function Layout() {
     ? copy.home.snapshot.generalTour
     : getHabitatLabel(selectedHabitat)
   const reservationLabel = reservation ? `${reservation.name} · ${reservation.date}` : copy.home.snapshot.pending
+
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [pathname])
 
   return (
     <div className="site-shell">
